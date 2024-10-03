@@ -1,0 +1,140 @@
+args_index : size_t = 1;
+
+print_usage: (t_prg: std::string_view) = {
+    std::cout << "Usage: (t_prg)$ <subcommand> [args]\n";
+    std::cout << "Subcommands:\n";
+    std::cout << "    help          Print help information for command and subcommand\n";
+    std::cout << "    add <task>    Add task to todo\n";
+    std::cout << "    search <text> Search for a specific text on the todo\n";
+    std::cout << "    done <task>   Mark the task as done\n";
+    std::cout << "    remove <task> Delete a specific task on the todo\n";
+}
+
+search_task: (file_str_line: std::string_view, task: std::string_view) -> bool = {
+    if(file_str_line.starts_with("- [ ] ") == false && file_str_line.starts_with("- [X] ") == false) {
+        return false; 
+    }
+    
+    if(file_str_line.ssize() - 7 != task.ssize()) {
+        return false;
+    }
+
+    file_ch := file_str_line.begin() + 6;
+    task_ch := task.begin();
+    while file_ch != file_str_line.end() && task_ch != task.end()
+    next (file_ch++, task_ch++) {
+        if(file_ch* != task_ch*) {
+            return false;
+        }
+    }
+    return true;
+}
+
+main: (args) -> int = {
+    prg := "2do";
+
+    file := fopen("2do.md", "a+");
+    file_str_lines : std::vector<std::string> = ();
+    file_str_lines.reserve(128);
+
+    ch := file.fgetc();
+
+    (copy i := 0)
+    while ch != EOF 
+    next ch = file.fgetc() {
+        file_str_lines.push_back("");
+        while ch != '\n' 
+        next ch = file.fgetc() {
+            file_str_lines.at(i).push_back(ch); 
+        }
+        file_str_lines.at(i).push_back('\n');
+        i++;
+    }
+
+    if(args.ssize() < 2) {
+        print_usage(prg);
+        fprintf(stderr, "Error: no subcommand provided\n");
+        fclose(file);
+        exit(1);
+    }
+
+    subcmd := args[args_index];
+    args_index++;
+    if(subcmd == "help") {
+        print_usage(prg);
+    }
+    else if(subcmd == "add") {
+        if(args.ssize() < 3) {
+            print_usage(prg);
+            fprintf(stderr, "Error: provide a task to add\n");
+            fclose(file);
+            exit(1);
+        }
+        task := args[args_index];
+        fprintf(file, "%s", ("- [ ] (task)$\n").c_str());
+    } else if(subcmd == "search") {
+        if(args.ssize() < 3) {
+            print_usage(prg);
+            fprintf(stderr, "Error: provide a text to search\n");
+            fclose(file);
+            exit(1);
+        }
+        search_str := args[args_index];
+        args_index++;
+        for file_str_lines do (file_str_line) {
+            if(file_str_line.contains(search_str)) {
+                std::cout << file_str_line;
+            }
+        }
+    } else if (subcmd == "done") {
+        if(args.ssize() < 3) {
+            print_usage(prg);
+            fprintf(stderr, "Error: provide a task to mark as done\n");
+            fclose(file);
+            exit(1);
+        }
+        task := args[args_index];
+        args_index++;
+        task_found := false;
+        fclose(file);
+        file = fopen("2do.md", "w");
+        for file_str_lines do (file_str_line) {
+            if(search_task(file_str_line, task)) {
+                task_found = true;
+                fprintf(file, "%s", ("- [X] (task)$\n").c_str());
+            } else {
+                fprintf(file, file_str_line.c_str());
+            }
+        }
+        if(task_found == false) {
+            fprintf(stderr, "Error: \"%s\" task not found\n", task.data());
+            fclose(file);
+            exit(1);
+        }
+    } else if (subcmd == "remove") {
+        if(args.ssize() < 3) {
+            print_usage(prg);
+            fprintf(stderr, "Error: provide a task to remove\n");
+            fclose(file);
+            exit(1);
+        }
+        task := args[args_index];
+        args_index++;
+        task_found := false;
+        fclose(file);
+        file = fopen("2do.md", "w");
+        for file_str_lines do (file_str_line) {
+            if(search_task(file_str_line, task)) {
+                task_found = true;
+            } else {
+                fprintf(file, file_str_line.c_str());
+            }
+        }
+        if(task_found == false) {
+            fprintf(stderr, "Error: \"%s\" task not found\n", task.data());
+            fclose(file);
+            exit(1);
+        }
+    }
+    fclose(file);
+}
