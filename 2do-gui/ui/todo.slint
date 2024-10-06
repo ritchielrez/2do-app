@@ -1,0 +1,50 @@
+import { CheckBox, ListView, LineEdit, Palette} from "std-widgets.slint";
+
+export struct TodoItem {
+  task: string,
+  checked: bool,
+}
+
+export struct Color {
+  bg: color,
+  fg: color,
+}
+
+export component MainWindow inherits Window {
+  out property<Color> catppuccin: {bg: #181828, fg: #cdd6f4};
+  out property<relative-font-size> font_size: 2rem;
+  in property<[TodoItem]> todos: [
+    {task: "task1", checked: false},
+    {task: "task2", checked: true},
+    {task: "task3", checked: false},
+    {task: "task4", checked: true},
+  ];
+  min-width: 600px;
+  min-height: 600px;
+  title: "2do-app";
+
+  VerticalLayout {
+    padding: 15px;
+    spacing: 5px;
+    title_text := Text {
+      font-size: root.font_size;
+      text: "Todos: ";
+    }
+    LineEdit {
+      accepted(string) => {
+      }
+      placeholder-text: "Add task";
+    }
+    todo_list := ListView {
+      for todo in root.todos: HorizontalLayout {
+        CheckBox {
+          toggled => {
+            todo.checked = self.checked;
+          }
+          text: todo.task;
+          checked: todo.checked;
+        }
+      }
+    }
+  }
+}
