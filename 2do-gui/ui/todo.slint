@@ -5,20 +5,9 @@ export struct TodoItem {
   checked: bool,
 }
 
-export struct Color {
-  bg: color,
-  fg: color,
-}
-
-export component MainWindow inherits Window {
-  out property<Color> catppuccin: {bg: #181828, fg: #cdd6f4};
+export component AppWindow inherits Window {
   out property<relative-font-size> font_size: 2rem;
-  in property<[TodoItem]> todos: [
-    {task: "task1", checked: false},
-    {task: "task2", checked: true},
-    {task: "task3", checked: false},
-    {task: "task4", checked: true},
-  ];
+  in property<[TodoItem]> todos: [];
   min-width: 600px;
   min-height: 600px;
   title: "2do-app";

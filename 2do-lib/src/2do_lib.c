@@ -106,15 +106,15 @@ char peek(TodoData *todo_data, size_t offset) {
   return todo_data->file_buffer->data[todo_data->file_buffer->size - 1];
 }
 
-int32_t read_file(TodoData *todo_data) {
-  int32_t ret = 0;
+TodoErr read_file(TodoData *todo_data) {
+  TodoErr ret = TodoSuccess;
   FILE *file = fopen(todo_data->file_name, "a+");
   if (file == NULL) {
-    return 1;
+    return TodoErrOpen;
   }
   int32_t ch = fgetc(file);
   if (ch == EOF) {
-    ret = -1;
+    ret = TodoErrEOF;
     goto defer;
   }
   for (; ch != EOF; ch = fgetc(file)) {
@@ -151,15 +151,18 @@ defer:
   return ret;
 }
 
-int32_t add_task(TodoData *todo_data, char *task) {
+TodoErr add_task(TodoData *todo_data, char *task) {
   FILE *file = fopen(todo_data->file_name, "a");
   Todo todo = {.task = string_init(128), .checked = false};
   string_assign(todo.task, task);
   todos_push_back(todo_data->todos, todo);
   if (file == NULL) {
-    return 1;
+    return TodoErrOpen;
   }
   fprintf(file, "- [ ] %s\n", task);
   fclose(file);
-  return 0;
+  return TodoSuccess;
+}
+
+bool search_task(char *task) {
 }

@@ -29,8 +29,6 @@ search_task: (file_str_line: std::string_view, task: std::string_view) -> bool =
   return true;
 }
 
-todos: @struct type = {}
-
 main: (args) -> int = {
   prg := "2do";
 

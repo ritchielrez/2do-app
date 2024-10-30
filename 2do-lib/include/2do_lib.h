@@ -5,6 +5,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
+typedef enum TodoErr {
+  TodoErrEOF = -1,
+  TodoSuccess,
+  TodoErrOpen,
+} TodoErr;
+
 typedef struct TodoString {
   char *data;
   size_t capacity;
@@ -40,8 +46,8 @@ TodoData *todo_data_init(const char *file_name);
 void todo_data_delete(TodoData *todo_data);
 char consume(TodoData *todo_data);
 char peek(TodoData *todo_data, size_t offset);
-int32_t read_file(TodoData *todo_data);
-int32_t add_task(TodoData *todo_data, char *task);
+TodoErr read_file(TodoData *todo_data);
+TodoErr add_task(TodoData *todo_data, char *task);
 bool search_task(char *task);
 bool done_task(char *task);
 bool remove_task(char *task);
