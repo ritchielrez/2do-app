@@ -2,94 +2,60 @@ use slint::ComponentHandle;
 use slint::VecModel;
 use slint::SharedString;
 use std::rc::Rc;
-use std::ffi::{CString, CStr};
-use libc::{c_char, size_t};
+use std::fs::File;
+use std::io;
+use std::path::Path;
+use std::io::BufRead;
 slint::include_modules!();
 
-// #[derive(Clone)]
-// struct TodoItemData {
-//     task: String,
-//     checked: bool,
-// }
-
-#[repr(C)]
-enum TodoErr {
-  TodoErrEOF = -1,
-  TodoSuccess,
-  TodoErrOpen,
+#[derive(Debug)]
+#[allow(dead_code)]
+enum TodoError {
+    FileOpenError(io::Error),
+    SlintError(slint::PlatformError),
+    SyntaxError,
 }
 
-#[repr(C)]
-struct TodoString {
-    data: *const c_char,
-    capacity: size_t,
-    size: size_t,
-}
-
-#[repr(C)]
-struct Todo {
-  task: *mut TodoString,
-  checked: bool,
-}
-
-#[repr(C)]
-struct Todos {
-    data: *mut Todo,
-    capacity: size_t,
-    size: size_t,
-}
-
-#[repr(C)]
-struct TodoData {
-    file_name: *const c_char,
-    file_buffer: *mut TodoString,
-    file_buffer_i: size_t,
-    todos: *mut Todos,
-}
-
-// impl From<TodoItemData> for TodoItem {
-//     fn from(data: TodoItemData) -> Self {
-//         TodoItem {
-//             task: data.task.into(),
-//             checked: data.checked,
-//         }
-//     }
-// }
-
-extern "C" {
-    fn string_init(capacity: size_t) -> *mut TodoString;
-    fn string_delete(string: *mut TodoString);
-    fn string_push_back(string: *mut TodoString, ch: c_char);
-    fn string_assign(string: *mut TodoString, assigned_string: *mut c_char);
-    fn todos_init(capacity: size_t) -> *mut Todos;
-    fn todos_push_back(todos: *mut Todos, todo: Todo);
-    fn todos_delete(todos: *mut Todos);
-    fn todo_data_init(file_name: *const c_char) -> *mut TodoData;
-    fn todo_data_delete(todo_data: *mut TodoData);
-    fn consume(todo_data: *mut TodoData) -> c_char;
-    fn peek(todo_data: *mut TodoData, offset: size_t) -> c_char;
-    fn read_file(todo_data: *mut TodoData) -> TodoErr;
-    fn add_task(todo_data: *mut TodoData, task: *mut c_char) -> TodoErr;
-    fn search_task(task: *mut c_char) -> bool;
-    fn done_task(task: *mut c_char) -> bool;
-    fn remove_task(task: *mut c_char) -> bool;
-}
-
-fn main() -> Result<(), slint::PlatformError> {
-    unsafe {
-        let file_name = CString::new("2do.md").unwrap();
-        let todo_data: *mut TodoData = todo_data_init(file_name.as_ptr());
-        let err = read_file(todo_data);
+impl From<slint::PlatformError> for TodoError {
+    fn from(data: slint::PlatformError) -> Self {
+        TodoError::SlintError(data)
     }
+}
+
+impl From<io::Error> for TodoError {
+    fn from(data: io::Error) -> Self {
+        TodoError::FileOpenError(data)
+    }
+}
+
+fn read_lines<P> (file_name: P) -> io::Result<io::Lines<io::BufReader<File>>>
+where P: AsRef<Path>, {
+    let file =  File::open(file_name)?;
+    Ok(io::BufReader::new(file).lines())
+}
+
+fn main() -> Result<(), TodoError> {
     let app = AppWindow::new()?;
-    // let mut todos_data: Vec<TodoItemData> = Vec::new();
-    let mut todos: Vec<TodoItem> = Vec::new();
-    todos.push(TodoItem{task:SharedString::from("task1"), checked:false});
-    todos.push(TodoItem{task:SharedString::from("task2"), checked:true});
-    // let todos: Vec<TodoItem> = todos_data.iter()
-    //     .map(|todo| todo.to_owned().into())
-    //     .collect();
-    let todos_model = Rc::new(VecModel::from(todos));
-    app.set_todos(todos_model.into());
-    app.run()
+    app.on_print_tasks_cb(move || {
+        let mut todo_buf = read_lines("2do.md").unwrap();
+        for (index, line) in todo_buf.flatten().enumerate() {
+            let mut item = TodoItem{checked: false, task: SharedString::new()};
+            if line.starts_with("- [ ] ") {
+                item.checked = false;
+            } else if line.starts_with("- [X] ") {
+                item.checked = true;
+            } else {
+                eprintln!("Invalid syntax on line {}, missing proper starting syntax(\"- [ ] \" or \"- [X] \")", index + 1);
+                // return Err(TodoError::SyntaxError);
+            }
+            let mut buf = String::from("");
+            for i in 6..line.len() {
+                let c = line.as_bytes()[i] as char;
+                buf.push(c);
+            }
+            item.task = buf.into();
+        }
+    });
+    app.invoke_print_tasks_cb();
+    Ok(app.run()?)
 }
