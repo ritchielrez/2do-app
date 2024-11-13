@@ -22,16 +22,16 @@ export component AppWindow inherits Window {
       font-size: root.font_size;
       text: "Todos: ";
     }
-    add_task_in := LineEdit {
+    search_task_in := LineEdit {
       accepted(task) => {
         root.add_task_cb(task);
       }
-      placeholder-text: "Add task";
+      placeholder-text: "Search task";
     }
     add_task_btn := Button {
       text: "Add task";
       clicked => {
-        root.add_task_cb(add_task_in.text);
+        // root.add_task_cb(add_task_in.text);
       }
     }
     todo_list := ListView {
