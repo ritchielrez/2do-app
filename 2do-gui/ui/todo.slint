@@ -1,4 +1,4 @@
-import { CheckBox, ListView, LineEdit, Palette, Button } from "std-widgets.slint";
+import { CheckBox, ListView, LineEdit, Palette, Button, StandardButton } from "std-widgets.slint";
 
 export struct TodoItem {
   task: string,
@@ -6,13 +6,13 @@ export struct TodoItem {
 }
 
 export component AppWindow inherits Window {
+
   out property<relative-font-size> font_size: 2rem;
   in property<[TodoItem]> todos: [];
   min-width: 600px;
   min-height: 600px;
   title: "2do-app";
 
-  callback print_tasks_cb();
   callback add_task_cb(string);
 
   VerticalLayout {
@@ -22,16 +22,20 @@ export component AppWindow inherits Window {
       font-size: root.font_size;
       text: "Todos: ";
     }
-    search_task_in := LineEdit {
-      accepted(task) => {
-        root.add_task_cb(task);
+    HorizontalLayout {
+      search_task_in := LineEdit {
+        accepted(task) => {
+          root.add_task_cb(task);
+        }
+        placeholder-text: "Search task";
       }
-      placeholder-text: "Search task";
+      search_task_btn := Button {
+        text: "Search";
+      }
     }
     add_task_btn := Button {
       text: "Add task";
       clicked => {
-        // root.add_task_cb(add_task_in.text);
       }
     }
     todo_list := ListView {

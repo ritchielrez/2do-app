@@ -36,26 +36,25 @@ where P: AsRef<Path>, {
 
 fn main() -> Result<(), TodoError> {
     let app = AppWindow::new()?;
-    app.on_print_tasks_cb(move || {
-        let mut todo_buf = read_lines("2do.md").unwrap();
-        for (index, line) in todo_buf.flatten().enumerate() {
-            let mut item = TodoItem{checked: false, task: SharedString::new()};
-            if line.starts_with("- [ ] ") {
-                item.checked = false;
-            } else if line.starts_with("- [X] ") {
-                item.checked = true;
-            } else {
-                eprintln!("Invalid syntax on line {}, missing proper starting syntax(\"- [ ] \" or \"- [X] \")", index + 1);
-                // return Err(TodoError::SyntaxError);
-            }
-            let mut buf = String::from("");
-            for i in 6..line.len() {
-                let c = line.as_bytes()[i] as char;
-                buf.push(c);
-            }
-            item.task = buf.into();
+    let todo_model = Rc::new(VecModel::<TodoItem>::from(vec![]));
+    let todo_buf = read_lines("2do.md")?;
+    for (index, line) in todo_buf.flatten().enumerate() {
+        let mut item = TodoItem{checked: false, task: SharedString::new()};
+        if line.starts_with("- [ ] ") {
+            item.checked = false;
+        } else if line.starts_with("- [X] ") {
+            item.checked = true;
+        } else {
+            eprintln!("Invalid syntax on line {}, missing proper starting syntax(\"- [ ] \" or \"- [X] \")", index + 1);
+            return Err(TodoError::SyntaxError);
         }
-    });
-    app.invoke_print_tasks_cb();
+        let mut buf = String::from("");
+        for i in 6..line.len() {
+            let c = line.as_bytes()[i] as char;
+            buf.push(c);
+        }
+        item.task = buf.into();
+        todo_model.push(item);
+    }
     Ok(app.run()?)
 }
