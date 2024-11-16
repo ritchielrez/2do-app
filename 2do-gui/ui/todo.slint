@@ -1,4 +1,4 @@
-import { CheckBox, ListView, LineEdit, Palette, Button, StandardButton } from "std-widgets.slint";
+import { CheckBox, ListView, LineEdit, Palette, Button, StandardButton, Switch } from "std-widgets.slint";
 
 export struct TodoItem {
   task: string,
@@ -10,19 +10,35 @@ export global AppConfig {
   out property<relative-font-size> font_size: 2rem;
   in property<[TodoItem]> todos: [];
 }
+
+export component AppWindow inherits Window {
+
+  callback theme_init();
+  callback add_task_cb(string);
   min-width: 600px;
   min-height: 600px;
   title: "2do-app";
 
-  callback add_task_cb(string);
-
+  theme_init => {
+    Palette.color-scheme = AppConfig.dark-theme ? ColorScheme.dark : ColorScheme.light;
+  }
   VerticalLayout {
     padding: 15px;
     spacing: 5px;
-    title_text := Text {
+    HorizontalLayout {
       title_text := Text {
         font-size: AppConfig.font_size;
         text: "Todos: ";
+      }
+      Rectangle{}
+      Switch {
+        text: "Dark theme";
+        checked: AppConfig.dark-theme;
+        toggled => {
+          AppConfig.dark-theme = self.checked ? true : false;
+          Palette.color-scheme = self.checked ? ColorScheme.dark : ColorScheme.light;
+        }
+      }
     }
     HorizontalLayout {
       search_task_in := LineEdit {

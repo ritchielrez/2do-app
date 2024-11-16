@@ -56,5 +56,6 @@ fn main() -> Result<(), TodoError> {
         item.task = buf.into();
         todo_model.push(item);
     }
+    app.invoke_theme_init();
     Ok(app.run()?)
 }
