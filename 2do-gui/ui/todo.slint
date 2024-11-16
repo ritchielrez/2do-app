@@ -5,10 +5,11 @@ export struct TodoItem {
   checked: bool,
 }
 
-export component AppWindow inherits Window {
-
+export global AppConfig {
+  in-out property<bool> dark-theme: true;
   out property<relative-font-size> font_size: 2rem;
   in property<[TodoItem]> todos: [];
+}
   min-width: 600px;
   min-height: 600px;
   title: "2do-app";
@@ -19,8 +20,9 @@ export component AppWindow inherits Window {
     padding: 15px;
     spacing: 5px;
     title_text := Text {
-      font-size: root.font_size;
-      text: "Todos: ";
+      title_text := Text {
+        font-size: AppConfig.font_size;
+        text: "Todos: ";
     }
     HorizontalLayout {
       search_task_in := LineEdit {
@@ -39,7 +41,7 @@ export component AppWindow inherits Window {
       }
     }
     todo_list := ListView {
-      for todo in root.todos: HorizontalLayout {
+      for todo in AppConfig.todos: HorizontalLayout {
         CheckBox {
           toggled => {
             todo.checked = self.checked;
