@@ -1,4 +1,4 @@
-import { CheckBox, ListView, LineEdit, Palette, Button, StandardButton, Switch } from "std-widgets.slint";
+import { CheckBox, ListView, LineEdit, Palette, Button, StandardButton, Switch, TextEdit } from "std-widgets.slint";
 
 export struct TodoItem {
   task: string,
@@ -15,12 +15,29 @@ export component AppWindow inherits Window {
 
   callback theme_init();
   callback add_task_cb(string);
+  callback add_task_popup_show();
   min-width: 600px;
   min-height: 600px;
   title: "2do-app";
 
   theme_init => {
     Palette.color-scheme = AppConfig.dark-theme ? ColorScheme.dark : ColorScheme.light;
+  }
+  add_task_popup_show => {
+    add_task_popup.show();
+  }
+
+  add_task_popup := PopupWindow {
+    Rectangle {
+      background: Palette.background;
+      border-color: Palette.border;
+      border-width: 1px;
+      width: 100%;
+      height: 100%;
+    }
+    TextEdit {
+      text: "Sample";
+    }
   }
   VerticalLayout {
     padding: 15px;
@@ -30,7 +47,7 @@ export component AppWindow inherits Window {
         font-size: AppConfig.font_size;
         text: "Todos: ";
       }
-      Rectangle{}
+      Rectangle{} // Spacer
       Switch {
         text: "Dark theme";
         checked: AppConfig.dark-theme;
@@ -42,11 +59,13 @@ export component AppWindow inherits Window {
     }
     HorizontalLayout {
       search_task_in := LineEdit {
-        accepted(task) => {
-          root.add_task_cb(task);
-        }
+        //width: 70%;
+        accepted(task) => {}
         placeholder-text: "Search task";
       }
+      Rectangle{
+        width: 1%;
+      } // Spacer
       search_task_btn := Button {
         text: "Search";
       }
@@ -54,6 +73,7 @@ export component AppWindow inherits Window {
     add_task_btn := Button {
       text: "Add task";
       clicked => {
+        root.add_task_popup_show();
       }
     }
     todo_list := ListView {

@@ -36,6 +36,7 @@ where P: AsRef<Path>, {
 
 fn main() -> Result<(), TodoError> {
     let app = AppWindow::new()?;
+    let app_config = app.global::<AppConfig>();
     let todo_model = Rc::new(VecModel::<TodoItem>::from(vec![]));
     let todo_buf = read_lines("2do.md")?;
     for (index, line) in todo_buf.flatten().enumerate() {
@@ -57,5 +58,6 @@ fn main() -> Result<(), TodoError> {
         todo_model.push(item);
     }
     app.invoke_theme_init();
+    app_config.set_todos(todo_model.into());
     Ok(app.run()?)
 }
