@@ -30,7 +30,7 @@ impl From<io::Error> for TodoError {
 
 fn read_lines<P> (file_name: P) -> io::Result<io::Lines<io::BufReader<File>>>
 where P: AsRef<Path>, {
-    let file =  File::open(file_name)?;
+    let file = OpenOptions::new().read(true).write(true).create(true).open(file_name)?;
     Ok(io::BufReader::new(file).lines())
 }
 
