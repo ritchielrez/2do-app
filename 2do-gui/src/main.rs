@@ -3,6 +3,7 @@ use slint::VecModel;
 use slint::SharedString;
 use std::rc::Rc;
 use std::fs::File;
+use std::fs::OpenOptions;
 use std::io;
 use std::path::Path;
 use std::io::BufRead;
