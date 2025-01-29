@@ -1,0 +1,16 @@
+{
+  "name": "2do-gui",
+  "version": "1.0.0",
+  "description": "A simple todo gui app",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "author": "Ritchiel Reza",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^6.0.11"
+  }
+}
