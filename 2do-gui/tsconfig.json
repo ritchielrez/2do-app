@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "module": "ESNext",
+      "noImplicitAny": true,
+      "removeComments": true,
+      "moduleResolution": "bundler",
+      "isolatedModules": true,
+      "strict": true,
+      "jsx": "react-jsx",
+      "allowImportingTsExtensions": true,
+      "noEmit": true,
+    },
+    "include": ["./src"]
+}
