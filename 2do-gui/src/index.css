@@ -18,3 +18,12 @@ body {
     display: grid;
     place-items: center;
 }
+
+#search {
+    place-items: horizontal;
+    border: medium solid;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    font-family: Excalifont;
+    font-size: 1.5em;
+}

@@ -1,4 +1,4 @@
-export default function Searchbar() {
+export default function Search() {
     const SearchBarStyle = {
         border: 'medium solid',
         borderRadius: '0.5em',
@@ -8,6 +8,9 @@ export default function Searchbar() {
     };
 
     return (
-        <input style={SearchBarStyle} type="text" size={36}/>
+        <div id="search">
+            <input type="text" size={24}/>
+            <button></button>
+        </div>
     );
 }
