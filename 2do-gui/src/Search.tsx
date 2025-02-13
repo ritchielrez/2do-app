@@ -1,16 +1,20 @@
-export default function Search() {
-    const SearchBarStyle = {
-        border: 'medium solid',
-        borderRadius: '0.5em',
-        padding: '0.5em',
-        fontFamily: 'Excalifont',
-        fontSize: '1.5em',
-    };
+function SearchBar() {
+    return (
+        <input id="search-bar" type="textbox"></input>
+    );
+}
 
+function SearchBtn() {
+    return (
+        <button id="search-btn">Search</button>
+    );
+}
+
+export default function Search() {
     return (
         <div id="search">
-            <input type="text" size={24}/>
-            <button></button>
+            <SearchBar></SearchBar>
+            <SearchBtn></SearchBtn>
         </div>
     );
 }
