@@ -13,6 +13,7 @@
     --bg-green: #a9b665;
     --fg: #ddc7a1;
     --blue: #7daea3;
+    --select: var(--bg-visual-blue);
     background-color: var(--bg);
     color: var(--fg);
 }
@@ -21,7 +22,7 @@ body {
     font-family: Excalifont;
 }
 
-h1::selection { background-color: var(--bg-visual-blue); }
+h1::selection { background-color: var(--select); }
 
 #root {
     display: grid;
@@ -44,8 +45,7 @@ h1::selection { background-color: var(--bg-visual-blue); }
     margin-right: 1em;
 }
 
-#search-bar::selection { background-color: var(--bg-visual-blue); }
-
+#search-bar::selection { background-color: var(--select); }
 #search-bar:focus { border-color: var(--blue); }
 
 #search-btn {
@@ -58,6 +58,7 @@ h1::selection { background-color: var(--bg-visual-blue); }
 
 }
 
+#search-btn::selection { background-color: var(--select); }
 #search-btn:hover { 
     background-color: var(--blue);
 }
