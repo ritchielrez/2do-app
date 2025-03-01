@@ -29,8 +29,8 @@ h1::selection { background-color: var(--select); }
     place-items: center;
 }
 
-#search {
-    place-items: horizontal;
+header { justify-self: center; }
+h1::selection { background-color: var(--select); }
 }
 
 #search-bar {

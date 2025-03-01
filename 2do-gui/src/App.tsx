@@ -4,7 +4,9 @@ import Search from "./Search.tsx";
 export default function App() {
   return (
     <>
+      <header>
       <h1 style={{fontSize: '2.5em'}}>2do app</h1>
+      </header>
       <Search></Search>
       <TodoList></TodoList>
     </>
