@@ -4,8 +4,6 @@
 }
 
 * {
-    margin: none;
-    padding: none;
     --bg: #282828;
     --bg1: #3c3836;
     --bg-visual-blue: #2e3b3b;
@@ -21,17 +19,14 @@
 
 body {
     font-family: Excalifont;
-}
-
-h1::selection { background-color: var(--select); }
-
-#root {
     display: grid;
     place-items: center;
 }
 
 header { justify-self: center; }
 h1::selection { background-color: var(--select); }
+
+input,button {
     box-sizing: border-box;
 }
 
@@ -57,10 +52,25 @@ h1::selection { background-color: var(--select); }
     padding: 0.5em;
     font-family: inherit;
     font-size: 1.5em;
-
 }
 
 #search-btn::selection { background-color: var(--select); }
 #search-btn:hover { 
     background-color: var(--blue);
 }
+
+#todo-list {
+    margin-top: 1em;
+}
+
+/* .todo-checkbox {
+    appearance: none;
+} */
+
+.todo {
+    font-size: 1.5em;
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: 0.5em;
+}
+label::selection { background-color: var(--select); }
