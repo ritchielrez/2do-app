@@ -21,10 +21,7 @@ export default function TodoList() {
         <div id="todo-list">
             {todos.map((todo, idx) => 
                 <label className="todo">
-                    {todo.checked ? 
-                        <input type="checkbox" onClick={() => onTodoClick(idx)} checked></input> 
-                        : <input type="checkbox" onClick={() => onTodoClick(idx)}></input>
-                    }
+                    <input type="checkbox" checked={todo.checked} onChange={() => onTodoClick(idx)}></input>
                     {todo.task}
                 </label>
             )}
