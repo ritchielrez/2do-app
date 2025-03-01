@@ -14,6 +14,7 @@
     --fg: #ddc7a1;
     --blue: #7daea3;
     --select: var(--bg-visual-blue);
+    accent-color: var(--blue);
     background-color: var(--bg);
     color: var(--fg);
 }
