@@ -45,27 +45,9 @@ input,button {
 #search-bar::selection { background-color: var(--select); }
 #search-bar:focus { border-color: var(--blue); }
 
-#search-btn {
-    border: none;
-    border-radius: 0.5em;
-    background-color: var(--bg1);
-    padding: 0.5em;
-    font-family: inherit;
-    font-size: 1.5em;
-}
-
-#search-btn::selection { background-color: var(--select); }
-#search-btn:hover { 
-    background-color: var(--blue);
-}
-
 #todo-list {
     margin-top: 1em;
 }
-
-/* .todo-checkbox {
-    appearance: none;
-} */
 
 .todo {
     font-size: 1.5em;
