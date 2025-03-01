@@ -32,6 +32,7 @@ h1::selection { background-color: var(--select); }
 
 header { justify-self: center; }
 h1::selection { background-color: var(--select); }
+    box-sizing: border-box;
 }
 
 #search-bar {
