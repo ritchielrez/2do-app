@@ -1,7 +1,12 @@
-export default function Search() {
+type SearchProps = {
+    value: string;
+    setValue: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Search(props: SearchProps) {
     return (
         <div id="search">
-            <input id="search-bar" type="textbox"></input>
+            <input value={props.value} onChange={(e) => props.setValue(e.target.value)} id="search-bar" type="textbox"></input>
             <button id="search-btn">Search</button>
         </div>
     );
