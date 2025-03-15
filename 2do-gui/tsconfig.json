@@ -1,15 +1,15 @@
 {
-    "compilerOptions": {
-      "module": "ES6",
-      "noImplicitAny": true,
-      "removeComments": true,
-      "moduleResolution": "bundler",
-      "isolatedModules": true,
-      "strict": true,
-      "jsx": "react-jsx",
-      "allowImportingTsExtensions": true,
-      "noEmit": true,
-      "lib": ["DOM", "ES6"]
-    },
-    "include": ["./src"]
+  "compilerOptions": {
+    "module": "ES6",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "strict": true,
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "lib": ["DOM", "ES6"]
+  },
+  "include": ["./src"]
 }

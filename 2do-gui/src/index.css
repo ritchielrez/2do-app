@@ -1,58 +1,69 @@
 @font-face {
-    font-family: Excalifont;
-    src: url(https://excalidraw.nyc3.cdn.digitaloceanspaces.com/fonts/Excalifont-Regular.woff2);
+  font-family: Excalifont;
+  src: url(https://excalidraw.nyc3.cdn.digitaloceanspaces.com/fonts/Excalifont-Regular.woff2);
 }
 
 * {
-    --bg: #282828;
-    --bg1: #3c3836;
-    --bg-visual-blue: #2e3b3b;
-    --bg-visual-green: #333e34;
-    --bg-green: #a9b665;
-    --fg: #ddc7a1;
-    --blue: #7daea3;
-    --select: var(--bg-visual-blue);
-    accent-color: var(--blue);
-    background-color: var(--bg);
-    color: var(--fg);
+  --bg: #282828;
+  --bg1: #3c3836;
+  --bg-visual-blue: #2e3b3b;
+  --bg-visual-green: #333e34;
+  --bg-green: #a9b665;
+  --fg: #ddc7a1;
+  --blue: #7daea3;
+  --select: var(--bg-visual-blue);
+  accent-color: var(--blue);
+  background-color: var(--bg);
+  color: var(--fg);
 }
 
 body {
-    font-family: Excalifont;
-    display: grid;
-    place-items: center;
+  font-family: Excalifont;
+  display: grid;
+  place-items: center;
 }
 
-header { justify-self: center; }
-h1::selection { background-color: var(--select); }
+header {
+  justify-self: center;
+}
+h1::selection {
+  background-color: var(--select);
+}
 
-input,button {
-    box-sizing: border-box;
+input,
+button {
+  box-sizing: border-box;
 }
 
 #search-bar {
-    appearance: none;
-    outline: none;
-    background-color: var(--bg1);
-    border: none;
-    border-radius: 0.5em;
-    padding: 0.5em;
-    font-family: inherit;
-    font-size: 1.5em;
-    margin-right: 1em;
+  appearance: none;
+  outline: none;
+  background-color: var(--bg1);
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  font-family: inherit;
+  font-size: 1.5em;
+  margin-right: 1em;
 }
 
-#search-bar::selection { background-color: var(--select); }
-#search-bar:focus { border-color: var(--blue); }
+#search-bar::selection {
+  background-color: var(--select);
+}
+#search-bar:focus {
+  border-color: var(--blue);
+}
 
 #todo-list {
-    margin-top: 1em;
+  margin-top: 1em;
 }
 
 .todo {
-    font-size: 1.5em;
-    display: grid;
-    grid-template-columns: 1em auto;
-    gap: 0.5em;
+  font-size: 1.5em;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
 }
-label::selection { background-color: var(--select); }
+label::selection {
+  background-color: var(--select);
+}
