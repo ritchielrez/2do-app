@@ -37,3 +37,9 @@ export default function TodoList(props: TodoListProps) {
     </div>
   );
 }
+
+export function AddTodoBtn() {
+  return (
+    <button id="add-todo-btn"></button>
+  )
+}
