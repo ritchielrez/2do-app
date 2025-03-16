@@ -1,5 +1,4 @@
 import TodoList from "./TodoList.tsx";
-import { AddTodoBtn } from "./TodoList.tsx";
 import Search from "./Search.tsx";
 import { useState } from "react";
 
@@ -31,7 +30,10 @@ export default function App() {
         todos={todos}
         setTodos={setTodos}
       ></TodoList>
-      <AddTodoBtn></AddTodoBtn>
+      <div id="btns">
+        <button>Upload</button>
+        <button>Add Task</button>
+      </div>
     </>
   );
 }

@@ -26,30 +26,32 @@ body {
 header {
   justify-self: center;
 }
+
 h1::selection {
   background-color: var(--select);
 }
 
 input,
 button {
+  font-family: inherit;
+  font-size: 1.5em;
   box-sizing: border-box;
+  border-radius: 0.5em;
 }
 
 #search-bar {
   appearance: none;
+  border: none;
   outline: none;
   background-color: var(--bg1);
-  border: none;
-  border-radius: 0.5em;
   padding: 0.5em;
-  font-family: inherit;
-  font-size: 1.5em;
   margin-right: 1em;
 }
 
 #search-bar::selection {
   background-color: var(--select);
 }
+
 #search-bar:focus {
   border-color: var(--blue);
 }
@@ -64,6 +66,26 @@ button {
   grid-template-columns: 1em auto;
   gap: 0.5em;
 }
+
 label::selection {
   background-color: var(--select);
+}
+
+#btns {
+  display: grid;
+  /* justify-self: center; */
+  grid-template-columns: 1fr 1fr;
+}
+
+button {
+  border: none;
+  background-color: var(--bg1);
+  padding: 0.5em;
+  margin-top: 0.75em;
+  justify-self: center;
+}
+
+button:hover {
+  background-color: var(--blue);
+  color: var(--bg);
 }
