@@ -45,7 +45,6 @@ button {
   outline: none;
   background-color: var(--bg1);
   padding: 0.5em;
-  margin-right: 1em;
 }
 
 #search-bar::selection {
@@ -73,8 +72,8 @@ label::selection {
 
 #btns {
   display: grid;
-  /* justify-self: center; */
   grid-template-columns: 1fr 1fr;
+  gap: 1em;
 }
 
 button {
@@ -83,6 +82,7 @@ button {
   padding: 0.5em;
   margin-top: 0.75em;
   justify-self: center;
+  width: 100%;
 }
 
 button:hover {
