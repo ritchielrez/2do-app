@@ -25,7 +25,7 @@ export default function TodoList(props: TodoListProps) {
   return (
     <div id="todo-list">
       {todos_filtered.map((todo) => (
-        <label className="todo">
+        <label className="todo" key={todo.id}>
           <input
             type="checkbox"
             checked={todo.checked}
