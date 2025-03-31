@@ -9,8 +9,7 @@ export default function Search(props: SearchProps) {
       <input
         value={props.value}
         onChange={(e) => props.setValue(e.target.value)}
-        id="search-bar"
-        type="textbox"
+        type="text"
       ></input>
     </div>
   );

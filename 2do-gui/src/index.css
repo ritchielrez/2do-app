@@ -39,7 +39,7 @@ button {
   border-radius: 0.5em;
 }
 
-#search-bar {
+input[type="text"] {
   appearance: none;
   border: none;
   outline: none;
@@ -47,11 +47,11 @@ button {
   padding: 0.5em;
 }
 
-#search-bar::selection {
+input[type="text"]::selection {
   background-color: var(--select);
 }
 
-#search-bar:focus {
+input[type="text"]:focus {
   border-color: var(--blue);
 }
 
