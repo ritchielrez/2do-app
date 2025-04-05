@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Todo } from "./App.tsx";
+import TaskInput from "./TaskInput.tsx";
 
 type TodoListProps = {
   searchStr: string;
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  newTask: boolean;
+  setNewTask: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function TodoList(props: TodoListProps) {
@@ -34,6 +37,10 @@ export default function TodoList(props: TodoListProps) {
           {todo.task}
         </label>
       ))}
+      <TaskInput
+        newTask={props.newTask}
+        setNewTask={props.setNewTask}
+      ></TaskInput>
     </div>
   );
 }

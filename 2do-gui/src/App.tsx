@@ -1,6 +1,7 @@
 import TodoList from "./TodoList.tsx";
 import Search from "./Search.tsx";
-import { useState } from "react";
+import TaskInput from "./TaskInput.tsx";
+import React, { useState } from "react";
 
 export type Todo = {
   checked: boolean;
@@ -18,21 +19,23 @@ export default function App() {
       { checked: true, task: "ta1sk", id: 4 }
     )
   );
+  const [newTask, setNewTask] = useState(false);
 
   return (
     <>
       <header>
-        <h1 style={{ fontSize: "2.5em" }}>2do app</h1>
+        <h1>2do app</h1>
       </header>
       <Search value={searchStr} setValue={setSearchStr}></Search>
       <TodoList
         searchStr={searchStr}
         todos={todos}
         setTodos={setTodos}
+        newTask={newTask} setNewTask={setNewTask}
       ></TodoList>
       <div id="btns">
         <button>Upload</button>
-        <button>Add Task</button>
+        <button onClick={() => setNewTask(true)}>Add Task</button>
       </div>
     </>
   );
