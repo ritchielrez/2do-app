@@ -4,14 +4,16 @@
   "description": "A simple todo gui app",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
+    "dev": "vite && prettier --write .",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write ."
   },
   "author": "Ritchiel Reza",
   "license": "MIT",
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "prettier": "3.5.3",
     "typescript": "^5.7.3",
     "vite": "^6.0.11"
   },
