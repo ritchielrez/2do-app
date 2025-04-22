@@ -1,28 +1,21 @@
-import { useState } from "react";
-import { Todo } from "./App.tsx";
+import { TodoActionType, StateContext } from "./App.tsx";
 import TaskInput from "./TaskInput.tsx";
+import { useContext } from "react";
 
-type TodoListProps = {
-  searchStr: string;
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-  newTask: boolean;
-  setNewTask: React.Dispatch<React.SetStateAction<boolean>>;
-};
+export default function TodoList() {
+  const state = useContext(StateContext);
+  // const onTodoClick = (id: number) => {
+  //   let todos_new = state.todos.slice();
+  //   todos_new.forEach((todo) => {
+  //     if (todo.id === id) {
+  //       todo.checked = !todo.checked;
+  //     }
+  //   });
+  //   state.setTodos(todos_new);
+  // };
 
-export default function TodoList(props: TodoListProps) {
-  const onTodoClick = (id: number) => {
-    let todos_new = props.todos.slice();
-    todos_new.forEach((todo) => {
-      if (todo.id === id) {
-        todo.checked = !todo.checked;
-      }
-    });
-    props.setTodos(todos_new);
-  };
-
-  const todos_filtered = props.todos.filter((todo) =>
-    todo.task.startsWith(props.searchStr)
+  const todos_filtered = state.todos.filter((todo) =>
+    todo.task.startsWith(state.searchStr)
   );
 
   return (
@@ -32,15 +25,18 @@ export default function TodoList(props: TodoListProps) {
           <input
             type="checkbox"
             checked={todo.checked}
-            onChange={() => onTodoClick(todo.id)}
+            onChange={() =>
+              state.todosDispatch({
+                type: TodoActionType.chg,
+                id: todo.id,
+                todo: { ...todo, checked: !todo.checked },
+              })
+            }
           ></input>
           {todo.task}
         </label>
       ))}
-      <TaskInput
-        newTask={props.newTask}
-        setNewTask={props.setNewTask}
-      ></TaskInput>
+      <TaskInput></TaskInput>
     </div>
   );
 }

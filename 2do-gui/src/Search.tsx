@@ -1,14 +1,14 @@
-type SearchProps = {
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
-};
+import { StateContext } from "./App.tsx";
+import { useContext } from "react";
 
-export default function Search(props: SearchProps) {
+export default function Search() {
+  const state = useContext(StateContext);
+
   return (
     <div id="search">
       <input
-        value={props.value}
-        onChange={(e) => props.setValue(e.target.value)}
+        value={state.searchStr}
+        onChange={(e) => state.setSearchStr(e.target.value)}
         type="text"
       ></input>
     </div>

@@ -1,2 +1,1 @@
-function uploadTodo() {
-}
+function uploadTodo() {}

@@ -1,7 +1,16 @@
 import TodoList from "./TodoList.tsx";
 import Search from "./Search.tsx";
-import TaskInput from "./TaskInput.tsx";
-import React, { useState } from "react";
+import React, { createContext, useState, useReducer } from "react";
+
+export let StateContext: React.Context<State>;
+
+let nextId = 0;
+
+export enum TodoActionType {
+  add = "add",
+  del = "delete",
+  chg = "change",
+}
 
 export type Todo = {
   checked: boolean;
@@ -9,30 +18,72 @@ export type Todo = {
   id: number;
 };
 
+type TodoAction = {
+  type: TodoActionType;
+  id: number;
+  todo: Todo;
+};
+
+export type State = {
+  searchStr: string;
+  setSearchStr: React.Dispatch<React.SetStateAction<string>>;
+  todos: Todo[];
+  todosDispatch: React.ActionDispatch<[action: TodoAction]>;
+  newTask: boolean;
+  setNewTask: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
+  switch (action.type) {
+    case TodoActionType.add: {
+    }
+    case TodoActionType.del: {
+    }
+    case TodoActionType.chg: {
+      return todos.map((todo) => {
+        if (todo.id == action.id) {
+          return action.todo;
+        } else {
+          return todo;
+        }
+      });
+    }
+    default: {
+      throw Error(`Unknown action: {action.type}`);
+    }
+  }
+}
+
 export default function App() {
   const [searchStr, setSearchStr] = useState("");
-  const [todos, setTodos] = useState(
+  const [todos, todosDispath] = useReducer(
+    todosReducer,
     Array<Todo>(
-      { checked: false, task: "task1", id: 1 },
-      { checked: true, task: "task2", id: 2 },
-      { checked: false, task: "2task", id: 3 },
-      { checked: true, task: "ta1sk", id: 4 }
+      { checked: false, task: "task1", id: nextId++ },
+      { checked: true, task: "task2", id: nextId++ },
+      { checked: false, task: "2task", id: nextId++ },
+      { checked: true, task: "ta1sk", id: nextId++ }
     )
   );
+
   const [newTask, setNewTask] = useState(false);
+  const state: State = {
+    searchStr: searchStr,
+    setSearchStr: setSearchStr,
+    todos: todos,
+    todosDispatch: todosDispath,
+    newTask: newTask,
+    setNewTask: setNewTask,
+  };
+  StateContext = createContext(state);
 
   return (
     <>
       <header>
         <h1>2do app</h1>
       </header>
-      <Search value={searchStr} setValue={setSearchStr}></Search>
-      <TodoList
-        searchStr={searchStr}
-        todos={todos}
-        setTodos={setTodos}
-        newTask={newTask} setNewTask={setNewTask}
-      ></TodoList>
+      <Search></Search>
+      <TodoList></TodoList>
       <div id="btns">
         <button>Upload</button>
         <button onClick={() => setNewTask(true)}>Add Task</button>

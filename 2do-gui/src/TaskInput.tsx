@@ -1,19 +1,18 @@
-type TaskInputProps = {
-  newTask: boolean;
-  setNewTask: React.Dispatch<React.SetStateAction<boolean>>;
-};
+import { StateContext } from "./App.tsx";
+import { useContext } from "react";
 
-export default function TaskInput(props: TaskInputProps) {
-  if (!props.newTask) return <></>;
+export default function TaskInput() {
+  const state = useContext(StateContext);
+
+  if (!state.newTask) return <></>;
   return (
     <>
       <input
         id="task-input"
         type="text"
-        style={{ margin: "0.3em 0 0.1em 0", padding: "0.2em", paddingLeft: "0.5em" }}
         onKeyDown={(event) => {
           if (event.key === "Escape") {
-            props.setNewTask(!props.newTask);
+            state.setNewTask(!state.newTask);
           }
         }}
       ></input>
