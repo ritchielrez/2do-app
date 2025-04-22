@@ -12,11 +12,10 @@ export default function TaskInput() {
         type="text"
         onKeyDown={(event) => {
           if (event.key === "Escape") {
-            state.setNewTask(!state.newTask);
+            state.setNewTask(false);
           }
         }}
       ></input>
-      <p style={{ margin: "0.5em 0 0.5em 0" }}>Press Esc key to cancel</p>
     </>
   );
 }

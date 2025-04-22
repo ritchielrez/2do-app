@@ -1,6 +1,7 @@
 import TodoList from "./TodoList.tsx";
 import Search from "./Search.tsx";
 import React, { createContext, useState, useReducer } from "react";
+import { Buttons } from "./Buttons.tsx";
 
 export let StateContext: React.Context<State>;
 
@@ -43,14 +44,13 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
     case TodoActionType.tog: {
       let todos_new = todos.slice();
       todos.forEach((todo) => {
-        if(todo.id == action.id) {
+        if (todo.id == action.id) {
           todo.checked = !todo.checked;
         }
       });
-      return todos_new;        
+      return todos_new;
     }
     case TodoActionType.ed: {
-
     }
     default: {
       throw Error(`Unknown action: {action.type}`);
@@ -59,6 +59,17 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
 }
 
 let state: State;
+
+export function todosAdd(task: string) {
+  state.todosDispatch({
+    type: TodoActionType.add,
+    id: null,
+    todo: { checked: false, task: task, id: nextId++ },
+  });
+}
+export function todosToggle(id: number) {
+  state.todosDispatch({ type: TodoActionType.tog, id: id, todo: null });
+}
 
 export default function App() {
   const [searchStr, setSearchStr] = useState("");
@@ -90,14 +101,7 @@ export default function App() {
       </header>
       <Search></Search>
       <TodoList></TodoList>
-      <div id="btns">
-        <button>Upload</button>
-        <button onClick={() => setNewTask(true)}>Add Task</button>
-      </div>
+      <Buttons></Buttons>
     </>
   );
-}
-
-export function todosToggle(id: number) {
-  state.todosDispatch({type: TodoActionType.tog, id: id, todo: null});
 }
