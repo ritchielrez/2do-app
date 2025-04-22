@@ -6,13 +6,14 @@ export let StateContext: React.Context<State>;
 
 let nextId = 0;
 
-export enum TodoActionType {
-  add = "add",
-  del = "delete",
-  chg = "change",
+enum TodoActionType {
+  add = 0,
+  del = 1,
+  tog = 2,
+  ed = 3,
 }
 
-export type Todo = {
+type Todo = {
   checked: boolean;
   task: string;
   id: number;
@@ -20,8 +21,8 @@ export type Todo = {
 
 type TodoAction = {
   type: TodoActionType;
-  id: number;
-  todo: Todo;
+  id: number | null;
+  todo: Todo | null;
 };
 
 export type State = {
@@ -39,20 +40,25 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
     }
     case TodoActionType.del: {
     }
-    case TodoActionType.chg: {
-      return todos.map((todo) => {
-        if (todo.id == action.id) {
-          return action.todo;
-        } else {
-          return todo;
+    case TodoActionType.tog: {
+      let todos_new = todos.slice();
+      todos.forEach((todo) => {
+        if(todo.id == action.id) {
+          todo.checked = !todo.checked;
         }
       });
+      return todos_new;        
+    }
+    case TodoActionType.ed: {
+
     }
     default: {
       throw Error(`Unknown action: {action.type}`);
     }
   }
 }
+
+let state: State;
 
 export default function App() {
   const [searchStr, setSearchStr] = useState("");
@@ -67,7 +73,7 @@ export default function App() {
   );
 
   const [newTask, setNewTask] = useState(false);
-  const state: State = {
+  state = {
     searchStr: searchStr,
     setSearchStr: setSearchStr,
     todos: todos,
@@ -90,4 +96,8 @@ export default function App() {
       </div>
     </>
   );
+}
+
+export function todosToggle(id: number) {
+  state.todosDispatch({type: TodoActionType.tog, id: id, todo: null});
 }
