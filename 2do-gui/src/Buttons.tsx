@@ -1,15 +1,26 @@
-import { useContext } from "react"
-import { StateContext } from "./App"
+import { useContext } from "react";
+import { StateContext, todosAdd } from "./App";
 
 export function Buttons() {
-    const state = useContext(StateContext);
+  const state = useContext(StateContext);
 
-    return (
-        <div id="btns">
-            <button onClick={() => {
-                if(state.newTask) state.setNewTask(false);
-            }}>{state.newTask ? "Cancel": "Upload"}</button>
-            <button onClick={() => state.setNewTask(true)}>Add Task</button>
-        </div>
-    )
+  return (
+    <div id="btns">
+      <button
+        onClick={() => {
+          if (state.newTask != undefined) state.setNewTask(undefined);
+        }}
+      >
+        {state.newTask != undefined ? "Cancel" : "Upload"}
+      </button>
+      <button onClick={() => {
+        if(state.newTask == undefined) {
+            state.setNewTask("");
+        } else {
+            console.log(state.newTask);
+            todosAdd(state.newTask);
+            state.setNewTask(undefined);
+        }}} >Add Task</button>
+    </div>
+  );
 }

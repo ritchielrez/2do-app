@@ -31,13 +31,14 @@ export type State = {
   setSearchStr: React.Dispatch<React.SetStateAction<string>>;
   todos: Todo[];
   todosDispatch: React.ActionDispatch<[action: TodoAction]>;
-  newTask: boolean;
-  setNewTask: React.Dispatch<React.SetStateAction<boolean>>;
+  newTask: string | undefined; // Using `undefined` instead of `null` because the `value` attr of <input> only takes in `undefined`
+  setNewTask: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
   switch (action.type) {
     case TodoActionType.add: {
+      return [...todos, action.todo as Todo];
     }
     case TodoActionType.del: {
     }
@@ -83,7 +84,7 @@ export default function App() {
     )
   );
 
-  const [newTask, setNewTask] = useState(false);
+  const [newTask, setNewTask] = useState<string | undefined>();
   state = {
     searchStr: searchStr,
     setSearchStr: setSearchStr,
@@ -94,6 +95,7 @@ export default function App() {
   };
   StateContext = createContext(state);
 
+  // TODO: Wrap text if it goes out of container
   return (
     <>
       <header>
