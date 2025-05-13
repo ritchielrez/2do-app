@@ -14,7 +14,7 @@ enum TodoActionType {
   ed = 3,
 }
 
-type Todo = {
+export type Todo = {
   checked: boolean;
   task: string;
   id: number;
@@ -31,8 +31,8 @@ export type State = {
   setSearchStr: React.Dispatch<React.SetStateAction<string>>;
   todos: Todo[];
   todosDispatch: React.ActionDispatch<[action: TodoAction]>;
-  newTask: string | undefined; // Using `undefined` instead of `null` because the `value` attr of <input> only takes in `undefined`
-  setNewTask: React.Dispatch<React.SetStateAction<string | undefined>>;
+  newTask: string | null;
+  setNewTask: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
@@ -84,7 +84,7 @@ export default function App() {
     )
   );
 
-  const [newTask, setNewTask] = useState<string | undefined>();
+  const [newTask, setNewTask] = useState<string | null>(null);
   state = {
     searchStr: searchStr,
     setSearchStr: setSearchStr,

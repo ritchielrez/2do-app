@@ -4,7 +4,7 @@ import { useContext } from "react";
 export default function TaskInput() {
   const state = useContext(StateContext);
 
-  if (state.newTask == undefined) return <></>;
+  if (state.newTask == null) return <></>;
   return (
     <>
       <input
@@ -13,10 +13,12 @@ export default function TaskInput() {
         value={state.newTask}
         onKeyDown={(event) => {
           if (event.key === "Escape") {
-            state.setNewTask(undefined);
+            state.setNewTask(null);
           }
         }}
-        onChange={(e) => {state.setNewTask(e.target.value)}}
+        onChange={(e) => {
+          state.setNewTask(e.target.value);
+        }}
       ></input>
     </>
   );

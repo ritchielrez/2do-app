@@ -8,19 +8,24 @@ export function Buttons() {
     <div id="btns">
       <button
         onClick={() => {
-          if (state.newTask != undefined) state.setNewTask(undefined);
+          if (state.newTask != null) state.setNewTask(null);
         }}
       >
-        {state.newTask != undefined ? "Cancel" : "Upload"}
+        {state.newTask != null ? "Cancel" : "Upload"}
       </button>
-      <button onClick={() => {
-        if(state.newTask == undefined) {
+      <button
+        onClick={() => {
+          if (state.newTask == null) {
             state.setNewTask("");
-        } else {
+          } else {
             console.log(state.newTask);
             todosAdd(state.newTask);
-            state.setNewTask(undefined);
-        }}} >Add Task</button>
+            state.setNewTask(null);
+          }
+        }}
+      >
+        Add Task
+      </button>
     </div>
   );
 }
