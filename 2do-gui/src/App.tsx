@@ -2,6 +2,7 @@ import TodoList from "./TodoList.tsx";
 import Search from "./Search.tsx";
 import React, { createContext, useState, useReducer } from "react";
 import { Buttons } from "./Buttons.tsx";
+import MenuBar from "./MenuBar.tsx";
 
 export let StateContext: React.Context<State>;
 
@@ -101,6 +102,7 @@ export default function App() {
       <header>
         <h1>2do app</h1>
       </header>
+      <MenuBar></MenuBar>
       <Search></Search>
       <TodoList></TodoList>
       <Buttons></Buttons>
