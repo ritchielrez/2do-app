@@ -1,31 +1,45 @@
 import { useContext } from "react";
 import { StateContext, todosAdd } from "./App";
 
-export function Buttons() {
+function CancelButton() {
   const state = useContext(StateContext);
 
-  return (
-    <div id="btns">
+  if (state.newTask != null) {
+    return (
       <button
         onClick={() => {
           if (state.newTask != null) state.setNewTask(null);
         }}
       >
-        {state.newTask != null ? "Cancel" : "Upload"}
+        Cancel
       </button>
-      <button
-        onClick={() => {
-          if (state.newTask == null) {
-            state.setNewTask("");
-          } else {
-            console.log(state.newTask);
-            todosAdd(state.newTask);
-            state.setNewTask(null);
-          }
-        }}
-      >
-        Add Task
-      </button>
+    );
+  }
+}
+
+function AddButton() {
+  const state = useContext(StateContext);
+  return (
+    <button
+      onClick={() => {
+        if (state.newTask == null) {
+          state.setNewTask("");
+        } else {
+          todosAdd(state.newTask);
+          state.setNewTask(null);
+        }
+      }}
+    >
+      Add Task
+    </button>
+  );
+}
+
+export function Buttons() {
+  return (
+    <div id="btns">
+      <CancelButton></CancelButton>
+      <AddButton></AddButton>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import TodoList from "./TodoList.tsx";
 import Search from "./Search.tsx";
 import React, { createContext, useState, useReducer } from "react";
 import { Buttons } from "./Buttons.tsx";
+import { loadTodos } from "./Storage.ts";
 import MenuBar from "./MenuBar.tsx";
 
 export let StateContext: React.Context<State>;
@@ -34,6 +35,7 @@ export type State = {
   todosDispatch: React.ActionDispatch<[action: TodoAction]>;
   newTask: string | null;
   setNewTask: React.Dispatch<React.SetStateAction<string | null>>;
+  nextId: number;
 };
 
 function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
@@ -66,7 +68,7 @@ export function todosAdd(task: string) {
   state.todosDispatch({
     type: TodoActionType.add,
     id: null,
-    todo: { checked: false, task: task, id: nextId++ },
+    todo: { checked: false, task: task, id: state.nextId++ },
   });
 }
 export function todosToggle(id: number) {
@@ -75,24 +77,17 @@ export function todosToggle(id: number) {
 
 export default function App() {
   const [searchStr, setSearchStr] = useState("");
-  const [todos, todosDispath] = useReducer(
-    todosReducer,
-    Array<Todo>(
-      { checked: false, task: "task1", id: nextId++ },
-      { checked: true, task: "task2", id: nextId++ },
-      { checked: false, task: "2task", id: nextId++ },
-      { checked: true, task: "ta1sk", id: nextId++ }
-    )
-  );
+  const [todos, todosDispatch] = useReducer(todosReducer, loadTodos());
 
   const [newTask, setNewTask] = useState<string | null>(null);
   state = {
     searchStr: searchStr,
     setSearchStr: setSearchStr,
     todos: todos,
-    todosDispatch: todosDispath,
+    todosDispatch: todosDispatch,
     newTask: newTask,
     setNewTask: setNewTask,
+    nextId: todos.length,
   };
   StateContext = createContext(state);
 
