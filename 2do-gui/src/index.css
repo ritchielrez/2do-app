@@ -84,8 +84,7 @@ label::selection {
 }
 
 #btns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 1em;
   margin-top: 0.5em;
 }
