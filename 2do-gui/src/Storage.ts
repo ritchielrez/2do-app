@@ -2,33 +2,42 @@ import { useContext } from "react";
 import { StateContext, Todo } from "./App.tsx";
 
 function parseTodos(data: string): Array<Todo> {
-  const lines = data.split("\n");
   const todos = Array<Todo>();
   let nextId = 0;
 
-  lines.forEach((line, index) => {
-    let checked: boolean;
-    if (line.startsWith("- [X]")) checked = true;
-    else if (line.startsWith("- [ ]")) checked = false;
-    else {
-      throw new Error(
-        `Parse error: todoList in localStorage does not start with neither \`- [ ]\` nor \`- [X]\` on line ${index + 1}`
-      );
-    }
-    if (line.length <= 7) {
-      throw new Error(
-        `Parser error: todoList in localStorage does not have enough characters on line ${index + 1}`
-      );
-    }
-    let task = line.slice(6);
-    todos.push({ checked: checked, task: task, id: nextId++ });
-  });
+  data
+    .replace(/[\r\n]+$/, "")
+    .split("\n")
+    .forEach((line, index) => {
+      let checked = false;
+      if (line.startsWith("- [X]")) checked = true;
+      else if (!line.startsWith("- [ ]")) {
+        throw new Error(
+          `Parse error: todoList in localStorage does not start with neither \`- [ ]\` nor \`- [X]\` on line ${index + 1}`
+        );
+      }
+      if (line.length <= 7) {
+        throw new Error(
+          `Parser error: todoList in localStorage does not have enough characters on line ${index + 1}`
+        );
+      }
+      let task = line.slice(6);
+      todos.push({ checked: checked, task: task, id: nextId++ });
+    });
 
   return todos;
 }
 
-export function saveTodos() {
-  const state = useContext(StateContext);
+export function saveTodos(todos: Array<Todo>) {
+  let data = "";
+  todos.forEach((todo) => {
+    if (todo.checked == true) data += "- [X] ";
+    else data += "- [ ] ";
+
+    data += todo.task;
+    data += "\n";
+  });
+  localStorage.setItem("todo-list", data);
 }
 
 export function exportTodos() {
