@@ -2,7 +2,7 @@ import TodoList from "./TodoList.tsx";
 import Search from "./Search.tsx";
 import React, { createContext, useState, useReducer } from "react";
 import { Buttons } from "./Buttons.tsx";
-import { loadTodos } from "./Storage.ts";
+import { loadTodos, saveTodos } from "./Storage.ts";
 import MenuBar from "./MenuBar.tsx";
 
 export let StateContext: React.Context<State>;
@@ -63,13 +63,20 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
 }
 
 let state: State;
+let saveTimer = 0;
+const initialTodo = loadTodos();
 
 export function todosAdd(task: string) {
+  clearTimeout(saveTimer);
   state.todosDispatch({
     type: TodoActionType.add,
     id: null,
     todo: { checked: false, task: task, id: state.nextId++ },
   });
+  // The todo list is not updated immediately, so wait for saving the todo list.
+  saveTimer = setTimeout(() => {
+    saveTodos(state.todos);
+  }, 1000);
 }
 export function todosToggle(id: number) {
   state.todosDispatch({ type: TodoActionType.tog, id: id, todo: null });
@@ -77,7 +84,7 @@ export function todosToggle(id: number) {
 
 export default function App() {
   const [searchStr, setSearchStr] = useState("");
-  const [todos, todosDispatch] = useReducer(todosReducer, loadTodos());
+  const [todos, todosDispatch] = useReducer(todosReducer, initialTodo);
 
   const [newTask, setNewTask] = useState<string | null>(null);
   state = {
@@ -104,3 +111,10 @@ export default function App() {
     </>
   );
 }
+
+document.addEventListener("visibilitychange", () => {
+  // If the tab is closed or minimized, save the todo list.
+  if (document.hidden) {
+    saveTodos(state.todos);
+  }
+});
