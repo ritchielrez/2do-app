@@ -8,6 +8,7 @@ export default function TaskInput() {
   return (
     <>
       <input
+        autoFocus
         id="task-input"
         type="text"
         value={state.newTask}
