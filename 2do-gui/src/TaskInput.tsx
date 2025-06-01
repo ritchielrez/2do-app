@@ -1,4 +1,4 @@
-import { StateContext } from "./App.tsx";
+import { StateContext, todosAdd } from "./App.tsx";
 import { useContext } from "react";
 
 export default function TaskInput() {
@@ -13,7 +13,14 @@ export default function TaskInput() {
         type="text"
         value={state.newTask}
         onKeyDown={(event) => {
-          if (event.key === "Escape") {
+          if (event.key == "Escape") {
+            state.setNewTask(null);
+          } else if (event.key == "Enter") {
+            if (state.newTask == null)
+              throw Error(
+                "`state.newTask` cannot be empty when adding a new task."
+              );
+            todosAdd(state.newTask);
             state.setNewTask(null);
           }
         }}
