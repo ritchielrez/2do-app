@@ -7,8 +7,6 @@ import MenuBar from "./MenuBar.tsx";
 
 export let StateContext: React.Context<State>;
 
-let nextId = 0;
-
 enum TodoActionType {
   add = 0,
   del = 1,
@@ -114,7 +112,10 @@ export default function App() {
 
 document.addEventListener("visibilitychange", () => {
   // If the tab is closed or minimized, save the todo list.
-  if (document.hidden) {
-    saveTodos(state.todos);
+  if (document.hidden == true) {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      saveTodos(state.todos);
+    }, 1000);
   }
 });

@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { StateContext, Todo } from "./App.tsx";
+import { Todo } from "./App.tsx";
 
 function parseTodos(data: string): Array<Todo> {
   const todos = Array<Todo>();
@@ -45,7 +44,7 @@ export function exportTodos() {
   const todoList = localStorage.getItem("todo-list");
   if (todoList == null) {
     throw new Error(
-      "Error: `saveTodosAs()` is called when `todo-list` is empty"
+      "Error: `exportTodos()` is called when `todo-list` is empty"
     );
   }
   const data = new Blob([todoList]);
@@ -57,7 +56,7 @@ export function exportTodos() {
 export function loadTodos(): Array<Todo> {
   const data = localStorage.getItem("todo-list");
   if (data == null) {
-    localStorage.setItem("todo-list", "- [ ] task1\n- [X] task2");
+    localStorage.setItem("todo-list", "- [ ] task1\n- [X] task2\n");
     return Array<Todo>(
       { checked: false, task: "task1", id: 0 },
       { checked: true, task: "task2", id: 1 }
