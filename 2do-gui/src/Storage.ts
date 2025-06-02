@@ -51,6 +51,7 @@ export function exportTodos() {
   element.download = "2do.md";
   element.href = URL.createObjectURL(data);
   element.click();
+  URL.revokeObjectURL(element.href);
 }
 
 export function loadTodos(): Array<Todo> {
