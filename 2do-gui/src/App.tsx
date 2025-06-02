@@ -23,7 +23,7 @@ export type Todo = {
 type TodoAction = {
   type: TodoActionType;
   id: number | null;
-  todo: Todo | null;
+  todos: Array<Todo> | null;
 };
 
 export type State = {
@@ -69,7 +69,7 @@ export function todosAdd(task: string) {
   state.todosDispatch({
     type: TodoActionType.add,
     id: null,
-    todo: { checked: false, task: task, id: state.nextId++ },
+    todos: [{ checked: false, task: task, id: state.nextId++ }],
   });
   // The todo list is not updated immediately, so wait for saving the todo list.
   saveTimer = setTimeout(() => {
@@ -77,7 +77,7 @@ export function todosAdd(task: string) {
   }, 1000);
 }
 export function todosToggle(id: number) {
-  state.todosDispatch({ type: TodoActionType.tog, id: id, todo: null });
+  state.todosDispatch({ type: TodoActionType.tog, id: id, todos: null });
 }
 
 export default function App() {
