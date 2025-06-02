@@ -40,7 +40,9 @@ export type State = {
 function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
   switch (action.type) {
     case TodoActionType.add: {
-      return [...todos, action.todo as Todo];
+      if (action.todos == null)
+        throw Error("`action.todos` is null when `todosAdd()` is being called");
+      return [...todos, action.todos[0]];
     }
     case TodoActionType.del: {
     }
