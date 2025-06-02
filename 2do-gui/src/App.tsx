@@ -9,9 +9,10 @@ export let StateContext: React.Context<State>;
 
 enum TodoActionType {
   add = 0,
-  del = 1,
-  tog = 2,
-  ed = 3,
+  del,
+  tog,
+  ed,
+  res,
 }
 
 export type Todo = {
@@ -53,6 +54,8 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
       return todos_new;
     }
     case TodoActionType.ed: {
+    }
+    case TodoActionType.res: {
     }
     default: {
       throw Error(`Unknown action: {action.type}`);
