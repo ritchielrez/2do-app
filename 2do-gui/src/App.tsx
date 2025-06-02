@@ -58,6 +58,10 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
     case TodoActionType.ed: {
     }
     case TodoActionType.res: {
+      if (action.todos == null)
+        throw Error(
+          "`action.todos` is nullwhen `todosReset()` is being called"
+        );
     }
     default: {
       throw Error(`Unknown action: {action.type}`);
@@ -83,6 +87,9 @@ export function todosAdd(task: string) {
 }
 export function todosToggle(id: number) {
   state.todosDispatch({ type: TodoActionType.tog, id: id, todos: null });
+}
+export function todosReset(todos: Array<Todo>) {
+  state.todosDispatch({ type: TodoActionType.res, id: null, todos: todos });
 }
 
 export default function App() {
