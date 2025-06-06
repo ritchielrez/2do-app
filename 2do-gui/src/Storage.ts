@@ -27,6 +27,30 @@ function parseTodos(data: string): Array<Todo> {
   return todos;
 }
 
+export async function openTodos() {
+  const element = document.createElement("input");
+  element.type = "file";
+  // The input element needs to be appended in order to work.
+  element.style.display = "none";
+  document.body.append(element);
+  element.addEventListener("cancel", () => {
+    element.remove();
+    console.error("User canceled file open operation.");
+  });
+  element.addEventListener("change", () => {
+    console.log(
+      "User selected file: ",
+      element.files ? element.files[0] : "none"
+    );
+  });
+
+  if ("showPicker" in HTMLInputElement.prototype) {
+    element.showPicker();
+  } else {
+    element.click();
+  }
+}
+
 export function saveTodos(todos: Array<Todo>) {
   let data = "";
   todos.forEach((todo) => {
