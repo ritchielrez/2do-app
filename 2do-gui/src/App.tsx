@@ -62,6 +62,7 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
         throw Error(
           "`action.todos` is null when `todosReset()` is being called"
         );
+			return action.todos;
     }
     default: {
       throw Error(`Unknown action: {action.type}`);

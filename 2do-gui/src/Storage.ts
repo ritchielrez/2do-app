@@ -1,4 +1,4 @@
-import { Todo } from "./App.tsx";
+import { Todo, todosReset } from "./App.tsx";
 
 function parseTodos(data: string): Array<Todo> {
   const todos = Array<Todo>();
@@ -27,9 +27,11 @@ function parseTodos(data: string): Array<Todo> {
   return todos;
 }
 
-export async function openTodos() {
+export function openTodos() {
   const element = document.createElement("input");
+  const reader = new FileReader();
   element.type = "file";
+  element.accept = ".md";
   // The input element needs to be appended in order to work.
   element.style.display = "none";
   document.body.append(element);
@@ -37,11 +39,10 @@ export async function openTodos() {
     element.remove();
     console.error("User canceled file open operation.");
   });
-  element.addEventListener("change", () => {
-    console.log(
-      "User selected file: ",
-      element.files ? element.files[0] : "none"
-    );
+  element.addEventListener("change", async () => {
+    const file = element.files?.[0];
+    const file_text = await file?.text();
+    todosReset(parseTodos(file_text ?? ""));
   });
 
   if ("showPicker" in HTMLInputElement.prototype) {
