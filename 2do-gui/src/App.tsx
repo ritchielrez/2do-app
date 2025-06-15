@@ -60,7 +60,7 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
     case TodoActionType.res: {
       if (action.todos == null)
         throw Error(
-          "`action.todos` is nullwhen `todosReset()` is being called"
+          "`action.todos` is null when `todosReset()` is being called"
         );
     }
     default: {
