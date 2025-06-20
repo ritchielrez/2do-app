@@ -67,10 +67,9 @@ input[type="text"]:focus {
 .todo {
   border-style: solid;
   border-color: var(--bg);
-  display: grid;
-  grid-template-columns: 1em auto;
+  display: flex;
+  /* grid-template-columns: 1em auto; */
   gap: 0.2em;
-  padding: 0.2em;
   box-sizing: border-box;
 }
 
@@ -79,27 +78,17 @@ input[type="text"]:focus {
   border-radius: 0.5em;
 }
 
-label::selection {
-  background-color: var(--select);
+.todo button {
+  padding: 0.2em;
+  background-color: var(--bg1);
+  width: min-content;
+  height: fit-content;
 }
 
 #btns {
   display: flex;
   gap: 1em;
   margin-top: 0.5em;
-}
-
-button {
-  border: none;
-  background-color: var(--bg1);
-  padding: 0.5em;
-  justify-self: center;
-  width: 100%;
-}
-
-button:hover {
-  background-color: var(--blue);
-  color: var(--bg);
 }
 
 #menu-bar {

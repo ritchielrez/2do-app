@@ -84,7 +84,15 @@ export function todosAdd(task: string) {
   // The todo list is not updated immediately, so wait for saving the todo list.
   saveTimer = setTimeout(() => {
     saveTodos(state.todos);
-  }, 1000);
+  }, 250);
+}
+export function todosDelete(id: number) {
+  clearTimeout(saveTimer);
+  state.todosDispatch({ type: TodoActionType.delete, id: id, todos: null });
+  // The todo list is not updated immediately, so wait for saving the todo list.
+  saveTimer = setTimeout(() => {
+    saveTodos(state.todos);
+  }, 250);
 }
 export function todosToggle(id: number) {
   state.todosDispatch({ type: TodoActionType.tog, id: id, todos: null });
@@ -129,6 +137,6 @@ document.addEventListener("visibilitychange", () => {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       saveTodos(state.todos);
-    }, 1000);
+    }, 250);
   }
 });

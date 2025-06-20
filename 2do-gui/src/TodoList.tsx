@@ -12,14 +12,17 @@ export default function TodoList() {
   return (
     <div id="todo-list">
       {todos_filtered.map((todo) => (
-        <label className="todo" key={todo.id}>
+        <div className="todo" key={todo.id}>
           <input
             type="checkbox"
             checked={todo.checked}
             onChange={() => todosToggle(todo.id)}
           ></input>
           {todo.task}
-        </label>
+          <button aria-label="delete-task" onClick={() => todosDelete(todo.id)}>
+            <img alt="Delete" src="assets/delete.svg"></img>
+          </button>
+        </div>
       ))}
       <TaskInput></TaskInput>
     </div>
