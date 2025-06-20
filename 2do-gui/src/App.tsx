@@ -9,10 +9,11 @@ export let StateContext: React.Context<State>;
 
 enum TodoActionType {
   add = 0,
-  del,
-  tog,
-  ed,
-  res,
+  delete,
+  toggle,
+  edit,
+  editModeToggle,
+  reset,
 }
 
 export type Todo = {
@@ -44,9 +45,10 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
         throw Error("`action.todos` is null when `todosAdd()` is being called");
       return [...todos, action.todos[0]];
     }
-    case TodoActionType.del: {
+    case TodoActionType.delete: {
+      return todos.filter((todo) => todo.id != action.id);
     }
-    case TodoActionType.tog: {
+    case TodoActionType.toggle: {
       let todos_new = todos.slice();
       todos.forEach((todo) => {
         if (todo.id == action.id) {
@@ -55,14 +57,14 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
       });
       return todos_new;
     }
-    case TodoActionType.ed: {
+    case TodoActionType.edit: {
     }
-    case TodoActionType.res: {
+    case TodoActionType.reset: {
       if (action.todos == null)
         throw Error(
           "`action.todos` is null when `todosReset()` is being called"
         );
-			return action.todos;
+      return action.todos;
     }
     default: {
       throw Error(`Unknown action: {action.type}`);
@@ -95,10 +97,10 @@ export function todosDelete(id: number) {
   }, 250);
 }
 export function todosToggle(id: number) {
-  state.todosDispatch({ type: TodoActionType.tog, id: id, todos: null });
+  state.todosDispatch({ type: TodoActionType.toggle, id: id, todos: null });
 }
 export function todosReset(todos: Array<Todo>) {
-  state.todosDispatch({ type: TodoActionType.res, id: null, todos: todos });
+  state.todosDispatch({ type: TodoActionType.reset, id: null, todos: todos });
 }
 
 export default function App() {
