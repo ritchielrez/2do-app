@@ -4,6 +4,7 @@
 }
 
 * {
+  --bg0: #1d2021;
   --bg: #282828;
   --bg1: #3c3836;
   --bg-visual-blue: #2e3b3b;
@@ -44,6 +45,18 @@ button {
   border-radius: 0.5em;
 }
 
+button {
+  border: none;
+  background-color: var(--bg1);
+  padding: 0.5em;
+  justify-self: center;
+  width: 100%;
+}
+
+button:active {
+  box-shadow: var(--bg0) 0.1em 0.1em 2em;
+}
+
 input[type="text"] {
   appearance: none;
   border: none;
@@ -68,7 +81,6 @@ input[type="text"]:focus {
   border-style: solid;
   border-color: var(--bg);
   display: flex;
-  /* grid-template-columns: 1em auto; */
   gap: 0.2em;
   box-sizing: border-box;
 }
@@ -77,11 +89,6 @@ input[type="text"]:focus {
   width: 90%;
   padding: 0.2em;
 }
-
-/* .todo label:hover {
-  background: var(--bg1);
-  border-radius: 0.5em;
-} */
 
 .todo button {
   padding: 0.2em;
