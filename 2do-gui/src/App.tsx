@@ -18,7 +18,6 @@ enum TodoActionType {
 
 export type Todo = {
   checked: boolean;
-  editing: boolean;
   task: string;
   id: number;
 };
@@ -82,7 +81,7 @@ export function todosAdd(task: string) {
   state.todosDispatch({
     type: TodoActionType.add,
     id: null,
-    todos: [{ checked: false, editing: false, task: task, id: state.nextId++ }],
+    todos: [{ checked: false, task: task, id: state.nextId++ }],
   });
   // The todo list is not updated immediately, so wait for saving the todo list.
   saveTimer = setTimeout(() => {

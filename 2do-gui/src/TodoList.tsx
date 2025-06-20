@@ -1,4 +1,4 @@
-import { StateContext, todosDelete, todosToggle } from "./App.tsx";
+import { StateContext, todosToggle } from "./App.tsx";
 import TaskInput from "./TaskInput.tsx";
 import { useContext } from "react";
 
