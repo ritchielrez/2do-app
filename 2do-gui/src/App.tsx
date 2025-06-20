@@ -54,8 +54,6 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
       return todos.map((todo) => {
         if (todo.id == action.id) {
           todo.checked = !todo.checked;
-        } else {
-          todo.checked = todo.checked;
         }
         return todo;
       });
@@ -63,6 +61,12 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
     case TodoActionType.edit: {
     }
     case TodoActionType.editModeSet: {
+      return todos.map((todo) => {
+        if (todo.id == action.id) {
+          todo.checked = action.editMode;
+        }
+        return todo;
+      });
     }
     case TodoActionType.reset: {
       if (action.todos == null)
@@ -120,6 +124,14 @@ export function todosToggle(id: number) {
     id: id,
     todos: null,
     editMode: false,
+  });
+}
+export function todoEditModeSet(id: number, editMode: boolean) {
+  state.todosDispatch({
+    type: TodoActionType.editModeSet,
+    id: id,
+    todos: null,
+    editMode: editMode,
   });
 }
 export function todosReset(todos: Array<Todo>) {
