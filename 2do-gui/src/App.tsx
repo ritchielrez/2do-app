@@ -12,18 +12,19 @@ enum TodoActionType {
   delete,
   toggle,
   edit,
-  editModeToggle,
+  editModeSet,
   reset,
 }
 
 export type Todo = {
   checked: boolean;
-  editing: boolean;
+  editMode: boolean;
   task: string;
   id: number;
 };
 
 type TodoAction = {
+  editMode: boolean;
   type: TodoActionType;
   id: number | null;
   todos: Array<Todo> | null;
@@ -61,6 +62,8 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
     }
     case TodoActionType.edit: {
     }
+    case TodoActionType.editModeSet: {
+    }
     case TodoActionType.reset: {
       if (action.todos == null)
         throw Error(
@@ -88,9 +91,10 @@ export function todosAdd(task: string) {
         checked: false,
         task: task,
         id: state.nextId++,
-        editing: false,
+        editMode: false,
       },
     ],
+    editMode: false,
   });
   // The todo list is not updated immediately, so wait for saving the todo list.
   saveTimer = setTimeout(() => {
@@ -99,17 +103,32 @@ export function todosAdd(task: string) {
 }
 export function todosDelete(id: number) {
   clearTimeout(saveTimer);
-  state.todosDispatch({ type: TodoActionType.delete, id: id, todos: null });
+  state.todosDispatch({
+    type: TodoActionType.delete,
+    id: id,
+    todos: null,
+    editMode: false,
+  });
   // The todo list is not updated immediately, so wait for saving the todo list.
   saveTimer = setTimeout(() => {
     saveTodos(state.todos);
   }, 250);
 }
 export function todosToggle(id: number) {
-  state.todosDispatch({ type: TodoActionType.toggle, id: id, todos: null });
+  state.todosDispatch({
+    type: TodoActionType.toggle,
+    id: id,
+    todos: null,
+    editMode: false,
+  });
 }
 export function todosReset(todos: Array<Todo>) {
-  state.todosDispatch({ type: TodoActionType.reset, id: null, todos: todos });
+  state.todosDispatch({
+    type: TodoActionType.reset,
+    id: null,
+    todos: todos,
+    editMode: false,
+  });
 }
 
 export default function App() {
