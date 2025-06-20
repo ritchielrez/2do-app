@@ -21,7 +21,12 @@ function parseTodos(data: string): Array<Todo> {
         );
       }
       let task = line.slice(6);
-      todos.push({ checked: checked, task: task, id: nextId++ });
+      todos.push({
+        checked: checked,
+        task: task,
+        id: nextId++,
+        editing: false,
+      });
     });
 
   return todos;
@@ -84,8 +89,8 @@ export function loadTodos(): Array<Todo> {
   if (data == null) {
     localStorage.setItem("todo-list", "- [ ] task1\n- [X] task2\n");
     return Array<Todo>(
-      { checked: false, task: "task1", id: 0 },
-      { checked: true, task: "task2", id: 1 }
+      { checked: true, task: "task1", id: 0, editing: false },
+      { checked: true, task: "task2", id: 1, editing: false }
     );
   } else {
     return parseTodos(data);
