@@ -50,13 +50,14 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
       return todos.filter((todo) => todo.id != action.id);
     }
     case TodoActionType.toggle: {
-      let todos_new = todos.slice();
-      todos.forEach((todo) => {
+      return todos.map((todo) => {
         if (todo.id == action.id) {
           todo.checked = !todo.checked;
+        } else {
+          todo.checked = todo.checked;
         }
+        return todo;
       });
-      return todos_new;
     }
     case TodoActionType.edit: {
     }
