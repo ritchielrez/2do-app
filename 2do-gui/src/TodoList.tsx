@@ -18,7 +18,7 @@ export default function TodoList() {
             checked={todo.checked}
             onChange={() => todosToggle(todo.id)}
           ></input>
-          {todo.task}
+          <span onClick={() => alert("hello")}>{todo.task}</span>
           <button aria-label="delete-task" onClick={() => todosDelete(todo.id)}>
             <img alt="Delete" src="assets/delete.svg"></img>
           </button>

@@ -73,10 +73,15 @@ input[type="text"]:focus {
   box-sizing: border-box;
 }
 
-.todo:hover {
+.todo span {
+  width: 90%;
+  padding: 0.2em;
+}
+
+/* .todo label:hover {
   background: var(--bg1);
   border-radius: 0.5em;
-}
+} */
 
 .todo button {
   padding: 0.2em;
