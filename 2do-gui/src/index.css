@@ -60,6 +60,22 @@ input[type="text"]:focus {
   border-color: var(--blue);
 }
 
+button {
+  border: none;
+  background-color: var(--bg1);
+  padding: 0.5em;
+  justify-self: center;
+  width: 100%;
+}
+
+button:active {
+  box-shadow: var(--fg) 0px 0.1em 0.5em;
+}
+
+span::selection {
+  background-color: var(--select);
+}
+
 #todo-list {
   margin-top: 0.5em;
 }
