@@ -85,7 +85,11 @@ let state: State;
 let saveTimer = 0;
 const initialTodo = loadTodos();
 
-export function todosAdd(task: string) {
+export function todosAdd() {
+  if (state.newTask == null || state.newTask == "") {
+    alert("Error: trying to add a todo with a empty name.");
+    return;
+  }
   clearTimeout(saveTimer);
   state.todosDispatch({
     type: TodoActionType.add,
@@ -93,7 +97,7 @@ export function todosAdd(task: string) {
     todos: [
       {
         checked: false,
-        task: task,
+        task: state.newTask,
         id: state.nextId++,
         editMode: false,
       },
@@ -104,6 +108,7 @@ export function todosAdd(task: string) {
   saveTimer = setTimeout(() => {
     saveTodos(state.todos);
   }, 250);
+  state.setNewTask(null);
 }
 export function todosDelete(id: number) {
   clearTimeout(saveTimer);

@@ -16,12 +16,7 @@ export default function TaskInput() {
           if (event.key == "Escape") {
             state.setNewTask(null);
           } else if (event.key == "Enter") {
-            if (state.newTask == null)
-              throw Error(
-                "`state.newTask` cannot be empty when adding a new task."
-              );
-            todosAdd(state.newTask);
-            state.setNewTask(null);
+            todosAdd();
           }
         }}
         onChange={(e) => {

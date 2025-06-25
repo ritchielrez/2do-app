@@ -25,8 +25,7 @@ function AddButton() {
         if (state.newTask == null) {
           state.setNewTask("");
         } else {
-          todosAdd(state.newTask);
-          state.setNewTask(null);
+          todosAdd();
         }
       }}
     >
