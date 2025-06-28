@@ -1,4 +1,4 @@
-import { Todo, todosReset } from "./App.tsx";
+import { Todo, todos, todosReset } from "./TodoList.tsx";
 
 function parseTodos(data: string): Array<Todo> {
   const todos = Array<Todo>();
@@ -57,7 +57,7 @@ export function openTodos() {
   }
 }
 
-export function saveTodos(todos: Array<Todo>) {
+export function saveTodos() {
   let data = "";
   todos.forEach((todo) => {
     if (todo.checked == true) data += "- [X] ";

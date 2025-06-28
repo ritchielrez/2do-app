@@ -1,14 +1,17 @@
-import { useContext } from "react";
-import { StateContext, todosAdd } from "./App";
+import { memo } from "react";
+import { todosAdd } from "./TodoList";
 
-function CancelButton() {
-  const state = useContext(StateContext);
+export type ButtonProps = {
+  newTask: string | null;
+  setNewTask: React.Dispatch<React.SetStateAction<string | null>>;
+};
 
-  if (state.newTask != null) {
+function CancelButton({ newTask, setNewTask }: ButtonProps) {
+  if (newTask != null) {
     return (
       <button
         onClick={() => {
-          if (state.newTask != null) state.setNewTask(null);
+          setNewTask(null);
         }}
       >
         Cancel
@@ -17,15 +20,15 @@ function CancelButton() {
   }
 }
 
-function AddButton() {
-  const state = useContext(StateContext);
+function AddButton({ newTask, setNewTask }: ButtonProps) {
   return (
     <button
       onClick={() => {
-        if (state.newTask == null) {
-          state.setNewTask("");
+        if (newTask == null) {
+          setNewTask("");
         } else {
-          todosAdd();
+          todosAdd(newTask);
+          setNewTask(null);
         }
       }}
     >
@@ -34,11 +37,11 @@ function AddButton() {
   );
 }
 
-export function Buttons() {
+export function Buttons({ newTask, setNewTask }: ButtonProps) {
   return (
     <div id="btns">
-      <CancelButton></CancelButton>
-      <AddButton></AddButton>
+      <CancelButton newTask={newTask} setNewTask={setNewTask}></CancelButton>
+      <AddButton newTask={newTask} setNewTask={setNewTask}></AddButton>
     </div>
   );
 }

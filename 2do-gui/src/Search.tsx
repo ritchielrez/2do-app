@@ -1,16 +1,19 @@
-import { StateContext } from "./App.tsx";
-import { useContext } from "react";
+import { memo } from "react";
 
-export default function Search() {
-  const state = useContext(StateContext);
+type SearchProps = {
+  searchStr: string;
+  setSearchStr: React.Dispatch<React.SetStateAction<string>>;
+};
 
+const Search = memo(function Search({ searchStr, setSearchStr }: SearchProps) {
   return (
-    <div id="search">
-      <input
-        value={state.searchStr}
-        onChange={(e) => state.setSearchStr(e.target.value)}
-        type="text"
-      ></input>
-    </div>
+    <input
+      value={searchStr}
+      onChange={(e) => setSearchStr(e.target.value)}
+      type="text"
+      autoComplete="false"
+    ></input>
   );
-}
+});
+
+export default Search;

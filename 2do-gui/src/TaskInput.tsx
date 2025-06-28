@@ -1,28 +1,33 @@
-import { StateContext, todosAdd } from "./App.tsx";
-import { useContext } from "react";
+import { memo, useState } from "react";
+import { ButtonProps, Buttons } from "./Buttons";
+import { todosAdd } from "./TodoList";
 
-export default function TaskInput() {
-  const state = useContext(StateContext);
-
-  if (state.newTask == null) return <></>;
+const TaskInput = memo(function TaskInput() {
+  const [newTask, setNewTask] = useState<string | null>(null);
+  if (newTask == null)
+    return <Buttons newTask={newTask} setNewTask={setNewTask}></Buttons>;
   return (
     <>
       <input
         autoFocus
         id="task-input"
         type="text"
-        value={state.newTask}
+        value={newTask}
         onKeyDown={(event) => {
           if (event.key == "Escape") {
-            state.setNewTask(null);
+            setNewTask(null);
           } else if (event.key == "Enter") {
-            todosAdd();
+            todosAdd(newTask);
+            setNewTask(null);
           }
         }}
         onChange={(e) => {
-          state.setNewTask(e.target.value);
+          setNewTask(e.target.value);
         }}
       ></input>
+      <Buttons newTask={newTask} setNewTask={setNewTask}></Buttons>
     </>
   );
-}
+});
+
+export default TaskInput;

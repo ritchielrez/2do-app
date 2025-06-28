@@ -1,15 +1,13 @@
-import { useContext } from "react";
+import { memo } from "react";
 import { exportTodos, openTodos, saveTodos } from "./Storage.ts";
-import { StateContext } from "./App.tsx";
 
-export default function MenuBar() {
-  const state = useContext(StateContext);
+const MenuBar = memo(function MenuBar() {
   return (
     <div id="menu-bar">
       <button onClick={() => openTodos()}>Open</button>
       <button
         onClick={() => {
-          saveTodos(state.todos);
+          saveTodos();
         }}
       >
         Save
@@ -17,4 +15,6 @@ export default function MenuBar() {
       <button onClick={exportTodos}>Export</button>
     </div>
   );
-}
+});
+
+export default MenuBar;
