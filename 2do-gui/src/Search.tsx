@@ -8,6 +8,7 @@ type SearchProps = {
 const Search = memo(function Search({ searchStr, setSearchStr }: SearchProps) {
   return (
     <input
+      id="search"
       value={searchStr}
       onChange={(e) => setSearchStr(e.target.value)}
       type="text"
