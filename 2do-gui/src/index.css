@@ -16,12 +16,25 @@
   accent-color: var(--blue);
   background-color: var(--bg);
   color: var(--fg);
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
 }
 
 body {
   font-family: Excalifont;
-  font-size: 22px;
-  display: grid;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
   place-items: center;
 }
 
@@ -41,7 +54,6 @@ input,
 button {
   font-family: inherit;
   font-size: 1em;
-  box-sizing: border-box;
   border-radius: 0.5em;
 }
 
@@ -51,6 +63,7 @@ button {
   padding: 0.5em;
   justify-self: center;
   width: 100%;
+  cursor: pointer;
 }
 
 button:active {
@@ -62,7 +75,7 @@ input[type="text"] {
   border: none;
   outline: none;
   background-color: var(--bg1);
-  padding: 0.5em;
+  width: 100%;
 }
 
 input[type="text"]::selection {
@@ -73,6 +86,10 @@ input[type="text"]:focus {
   border-color: var(--blue);
 }
 
+#search {
+  padding: 0.5em;
+}
+
 #todo-list {
   margin-top: 0.5em;
 }
@@ -81,13 +98,29 @@ input[type="text"]:focus {
   border-style: solid;
   border-color: var(--bg);
   display: flex;
-  gap: 0.2em;
-  box-sizing: border-box;
+  width: 100%;
+  gap: 0.1em;
 }
 
 .todo span {
-  width: 90%;
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
   padding: 0.2em;
+}
+
+.non-editing-task {
+  border: 0.1em solid;
+  border-color: var(--bg);
+}
+
+.editing-task {
+  cursor: text;
+  border-radius: 0.3em;
+  resize: none;
+  outline: none;
+  border: 0.1em solid;
+  border-color: var(--bg1);
 }
 
 .todo button {
@@ -112,6 +145,5 @@ input[type="text"]:focus {
 
 #task-input {
   margin: 0.3em 0 0.1em 0;
-  padding: 0.2em;
-  padding-left: 0.5em;
+  padding: 0.5em;
 }
