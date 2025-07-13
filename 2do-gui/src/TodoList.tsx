@@ -4,9 +4,9 @@ import { loadTodos, saveTodos } from "./Storage.ts";
 enum TodoActionType {
   add = 0,
   delete,
-  toggle,
+  toggleChecked,
   edit,
-  editModeSet,
+  toggleEditMode,
   reset,
 }
 
@@ -22,7 +22,7 @@ type TodoListProps = {
 };
 
 type TodoAction = {
-  editMode: boolean;
+  task: string | null;
   type: TodoActionType;
   id: number | null;
   todos: Array<Todo> | null;
@@ -44,7 +44,15 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
     case TodoActionType.delete: {
       return todos.filter((todo) => todo.id != action.id);
     }
-    case TodoActionType.toggle: {
+    case TodoActionType.edit: {
+      return todos.map((todo) => {
+        if (todo.id == action.id) {
+          todo.task = action.task;
+        }
+        return todo;
+      });
+    }
+    case TodoActionType.toggleChecked: {
       return todos.map((todo) => {
         if (todo.id == action.id) {
           todo.checked = !todo.checked;
@@ -52,12 +60,10 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
         return todo;
       });
     }
-    case TodoActionType.edit: {
-    }
-    case TodoActionType.editModeSet: {
+    case TodoActionType.toggleEditMode: {
       return todos.map((todo) => {
         if (todo.id == action.id) {
-          todo.checked = action.editMode;
+          todo.editMode = !todo.editMode;
         }
         return todo;
       });
@@ -82,6 +88,7 @@ export function todosAdd(newTask: string) {
   }
   clearTimeout(saveTimer);
   todosDispatch({
+    task: null,
     type: TodoActionType.add,
     id: null,
     todos: [
@@ -92,7 +99,6 @@ export function todosAdd(newTask: string) {
         editMode: false,
       },
     ],
-    editMode: false,
   });
   // The todo list is not updated immediately, so wait for saving the todo list.
   saveTimer = setTimeout(() => {
@@ -102,38 +108,51 @@ export function todosAdd(newTask: string) {
 export function todosDelete(id: number) {
   clearTimeout(saveTimer);
   todosDispatch({
+    task: null,
     type: TodoActionType.delete,
     id: id,
     todos: null,
-    editMode: false,
   });
   // The todo list is not updated immediately, so wait for saving the todo list.
   saveTimer = setTimeout(() => {
     saveTodos();
   }, 250);
 }
-export function todosToggle(id: number) {
+export function todosEdit(id: number, task: string) {
+  clearTimeout(saveTimer);
   todosDispatch({
-    type: TodoActionType.toggle,
+    task: task,
+    type: TodoActionType.edit,
     id: id,
     todos: null,
-    editMode: false,
+  });
+  // The todo list is not updated immediately, so wait for saving the todo list.
+  saveTimer = setTimeout(() => {
+    saveTodos();
+  }, 250);
+}
+export function todosToggleChecked(id: number) {
+  todosDispatch({
+    task: null,
+    type: TodoActionType.toggleChecked,
+    id: id,
+    todos: null,
   });
 }
-export function todoEditModeSet(id: number, editMode: boolean) {
+export function todoToggleEditMode(id: number) {
   todosDispatch({
-    type: TodoActionType.editModeSet,
+    task: null,
+    type: TodoActionType.toggleEditMode,
     id: id,
     todos: null,
-    editMode: editMode,
   });
 }
 export function todosReset(todos: Array<Todo>) {
   todosDispatch({
+    task: null,
     type: TodoActionType.reset,
     id: null,
     todos: todos,
-    editMode: false,
   });
 }
 
@@ -150,9 +169,35 @@ const TodoList = memo(function TodoList({ searchStr }: TodoListProps) {
           <input
             type="checkbox"
             checked={todo.checked}
-            onChange={() => todosToggle(todo.id)}
+            onChange={() => todosToggleChecked(todo.id)}
           ></input>
-          <span onClick={() => alert("hello")}>{todo.task}</span>
+          {todo.editMode ? (
+            <span
+              contentEditable
+              suppressContentEditableWarning
+              className="editing-task"
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  const edited_task = e.currentTarget.textContent.trim();
+                  todosEdit(todo.id, edited_task);
+                  todoToggleEditMode(todo.id);
+                } else if (e.key == "Escape") {
+                  e.currentTarget.textContent = todo.task;
+                  todoToggleEditMode(todo.id);
+                }
+              }}
+            >
+              {todo.task}
+            </span>
+          ) : (
+            <span
+              className="non-editing-task"
+              onClick={() => todoToggleEditMode(todo.id, true)}
+            >
+              {todo.task}
+            </span>
+          )}
           <button aria-label="delete-task" onClick={() => todosDelete(todo.id)}>
             <img alt="Delete" src="assets/delete.svg"></img>
           </button>
