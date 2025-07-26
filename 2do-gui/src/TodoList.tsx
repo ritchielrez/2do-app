@@ -179,6 +179,10 @@ const TodoList = memo(function TodoList({ searchStr }: TodoListProps) {
               autoFocus
               onKeyDown={(e) => {
                 if (e.key == "Enter") {
+                  if (e.currentTarget.textContent == null){
+                    e.currentTarget.textContent = todo.task;
+                    todoToggleEditMode(todo.id);
+                  }
                   const edited_task = e.currentTarget.textContent.trim();
                   todosEdit(todo.id, edited_task);
                   todoToggleEditMode(todo.id);
@@ -193,7 +197,7 @@ const TodoList = memo(function TodoList({ searchStr }: TodoListProps) {
           ) : (
             <span
               className="non-editing-task"
-              onClick={() => todoToggleEditMode(todo.id, true)}
+              onClick={() => todoToggleEditMode(todo.id)}
             >
               {todo.task}
             </span>
