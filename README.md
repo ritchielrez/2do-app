@@ -2,21 +2,21 @@
 
 2do-app is a simple todo app with a CLI and GUI frontend. It supports adding, deleting and editings todos in your todolist. You can export todolist to save it in your computer as well.
 
+## Screenshot
+![2do-gui](./Screenshot_GUI.jpeg)
+
 ## Build
 
 ### NOTE: All the commands here need to be run in Windows Powershell or Linux/Mac OS Terminal
 
 ### To build the CLI:
 
-**Requirements**: A modern C++ compiler with support of C++23
+**Requirements**: A modern version of golang compiler
 
 ```bash
 git clone https://github.com/ritchielrez/2do-app
-cd 2do-app/2do-cli/cppfront
-g++ -std=c++23 -O3 ./source/cppfront.cpp -I ./include/ -o cppfront
-cd ..
-./cppfront/cppfront.exe ./src/main.cpp2 -o ./build/main.cpp
-g++ -std=c++23 -O3 ./build/main.cpp -I ..cppfront/include/ -o ./build/2do-cli
+cd 2do-app/2do-cli/
+go build 2do-cli.go
 ```
 
 ### To build the GUI:
