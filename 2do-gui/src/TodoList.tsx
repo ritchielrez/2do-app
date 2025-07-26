@@ -159,7 +159,7 @@ export function todosReset(todos: Array<Todo>) {
 const TodoList = memo(function TodoList({ searchStr }: TodoListProps) {
   [todos, todosDispatch] = useReducer(todosReducer, initialTodo);
   const todos_filtered = todos.filter((todo) =>
-    todo.task.startsWith(searchStr)
+    todo.task.includes(searchStr)
   );
 
   return (
