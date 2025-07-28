@@ -20,6 +20,10 @@
   padding: 0;
 }
 
+*::selection {
+  background-color: var(--select);
+}
+
 *,
 *::before,
 *::after {
@@ -76,10 +80,6 @@ input[type="text"] {
   outline: none;
   background-color: var(--bg1);
   width: 100%;
-}
-
-input[type="text"]::selection {
-  background-color: var(--select);
 }
 
 input[type="text"]:focus {
