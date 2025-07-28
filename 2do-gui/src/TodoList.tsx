@@ -48,7 +48,7 @@ function todosReducer(todos: Array<Todo>, action: TodoAction): Array<Todo> {
     case TodoActionType.edit: {
       return todos.map((todo) => {
         if (todo.id == action.id) {
-          todo.task = action.task;
+          todo.task = action.task ?? "";
         }
         return todo;
       });
