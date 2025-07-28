@@ -171,37 +171,15 @@ const TodoList = memo(function TodoList({ searchStr }: TodoListProps) {
             checked={todo.checked}
             onChange={() => todosToggleChecked(todo.id)}
           ></input>
-          {todo.editMode ? (
+          {todo.editMode ?
+            <EditableTodo todo={todo} /> :
             <span
-              contentEditable
-              suppressContentEditableWarning
-              className="editing-task"
-              autoFocus
-              onKeyDown={(e) => {
-                if (e.key == "Enter") {
-                  if (e.currentTarget.textContent == null){
-                    e.currentTarget.textContent = todo.task;
-                    todoToggleEditMode(todo.id);
-                  }
-                  const edited_task = e.currentTarget.textContent.trim();
-                  todosEdit(todo.id, edited_task);
-                  todoToggleEditMode(todo.id);
-                } else if (e.key == "Escape") {
-                  e.currentTarget.textContent = todo.task;
-                  todoToggleEditMode(todo.id);
-                }
-              }}
-            >
-              {todo.task}
-            </span>
-          ) : (
-            <span
-              className="non-editing-task"
+              className="non-editing-todo"
               onClick={() => todoToggleEditMode(todo.id)}
             >
               {todo.task}
             </span>
-          )}
+          }
           <button aria-label="delete-task" onClick={() => todosDelete(todo.id)}>
             <img alt="Delete" src="assets/delete.svg"></img>
           </button>
