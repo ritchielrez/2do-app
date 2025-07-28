@@ -8,6 +8,7 @@ type EditableTodoProps = {
 export default function EditableTodo({ todo }: EditableTodoProps) {
   const ref = useRef<HTMLSpanElement>(null)
 
+  // Select task on mount
   useEffect(() => {
     const element = ref.current;
     if (element == null) return;
@@ -21,7 +22,22 @@ export default function EditableTodo({ todo }: EditableTodoProps) {
       selection.removeAllRanges();
       selection.addRange(range); // This is important for the range to effect
     }
-  }, []) // Pass an empty array as deps to ensure the effect runs only once after initial render
+  }, []); // Pass an empty array as deps to ensure the effect runs only once after initial render
+
+
+  // Exit edit mode when clicking outside the span
+  useEffect(() => {
+    const handleClick = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        todoToggleEditMode(todo.id);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    // Cleanup when unmounting or before re-running the effect
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    }
+  }, []);
 
   return (
     <span
