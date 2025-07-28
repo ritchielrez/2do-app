@@ -17,6 +17,8 @@ export default function App() {
       <Search searchStr={searchStr} setSearchStr={setSearchStr}></Search>
       <TodoList searchStr={searchStr}></TodoList>
       <TaskInput></TaskInput>
-    </>
+      <footer>
+        <p>Click on a todo to edit</p>
+      </footer>
   );
 }

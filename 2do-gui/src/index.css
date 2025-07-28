@@ -43,15 +43,14 @@ body {
 }
 
 header {
+  margin: 0.5em 0 0.5em 0;
   justify-self: center;
 }
 
-h1 {
-  margin: 0.5em 0 0.5em 0;
-}
-
-h1::selection {
-  background-color: var(--select);
+footer {
+  font-size: 0.8em;
+  margin-top: 1em;
+  justify-items: center;
 }
 
 input,
