@@ -1,5 +1,6 @@
 import { memo, useReducer } from "react";
 import { loadTodos, saveTodos } from "./Storage.ts";
+import EditableTodo from "./EditableTodo.tsx";
 
 enum TodoActionType {
   add = 0,

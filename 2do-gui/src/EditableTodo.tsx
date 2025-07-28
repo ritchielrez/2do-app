@@ -33,7 +33,7 @@ export default function EditableTodo({ todo }: EditableTodoProps) {
       }
     }
     document.addEventListener("mousedown", handleClick);
-    // Cleanup when unmounting or before re-running the effect
+    // Cleanup when unmounting the effect
     return () => {
       document.removeEventListener("mousedown", handleClick);
     }
