@@ -22,11 +22,8 @@ export default function EditableTodo({ todo }: EditableTodoProps) {
       selection.removeAllRanges();
       selection.addRange(range); // This is important for the range to effect
     }
-  }, []); // Pass an empty array as deps to ensure the effect runs only once after initial render
 
-
-  // Exit edit mode when clicking outside the span
-  useEffect(() => {
+    // Exit edit mode when clicking outside the span
     const handleClick = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         todoToggleEditMode(todo.id);
@@ -37,7 +34,7 @@ export default function EditableTodo({ todo }: EditableTodoProps) {
     return () => {
       document.removeEventListener("mousedown", handleClick);
     }
-  }, []);
+  }, []); // Pass an empty array as deps to ensure the effect runs only once after initial render
 
   return (
     <span
