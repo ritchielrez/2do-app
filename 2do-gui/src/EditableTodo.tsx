@@ -2,11 +2,11 @@ import { useEffect, useRef } from "react";
 import { Todo, todosEdit, todoToggleEditMode } from "./TodoList";
 
 type EditableTodoProps = {
-  todo: Todo
-}
+  todo: Todo;
+};
 
 export default function EditableTodo({ todo }: EditableTodoProps) {
-  const ref = useRef<HTMLSpanElement>(null)
+  const ref = useRef<HTMLSpanElement>(null);
 
   // Select task on mount
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function EditableTodo({ todo }: EditableTodoProps) {
     if (element == null) return;
     element.focus();
 
-    const range = document.createRange()
+    const range = document.createRange();
     range.selectNodeContents(element);
 
     const selection = document.getSelection();
@@ -28,12 +28,12 @@ export default function EditableTodo({ todo }: EditableTodoProps) {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         todoToggleEditMode(todo.id);
       }
-    }
+    };
     document.addEventListener("mousedown", handleClick);
     // Cleanup when unmounting the effect
     return () => {
       document.removeEventListener("mousedown", handleClick);
-    }
+    };
   }, []); // Pass an empty array as deps to ensure the effect runs only once after initial render
 
   return (
@@ -60,5 +60,5 @@ export default function EditableTodo({ todo }: EditableTodoProps) {
     >
       {todo.task}
     </span>
-  )
+  );
 }

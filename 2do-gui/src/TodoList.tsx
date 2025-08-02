@@ -159,9 +159,7 @@ export function todosReset(todos: Array<Todo>) {
 
 const TodoList = memo(function TodoList({ searchStr }: TodoListProps) {
   [todos, todosDispatch] = useReducer(todosReducer, initialTodo);
-  const todos_filtered = todos.filter((todo) =>
-    todo.task.includes(searchStr)
-  );
+  const todos_filtered = todos.filter((todo) => todo.task.includes(searchStr));
 
   return (
     <div id="todo-list">
@@ -172,15 +170,16 @@ const TodoList = memo(function TodoList({ searchStr }: TodoListProps) {
             checked={todo.checked}
             onChange={() => todosToggleChecked(todo.id)}
           ></input>
-          {todo.editMode ?
-            <EditableTodo todo={todo} /> :
+          {todo.editMode ? (
+            <EditableTodo todo={todo} />
+          ) : (
             <span
               className="non-editing-todo"
               onClick={() => todoToggleEditMode(todo.id)}
             >
               {todo.task}
             </span>
-          }
+          )}
           <button aria-label="delete-task" onClick={() => todosDelete(todo.id)}>
             <img alt="Delete" src="assets/delete.svg"></img>
           </button>

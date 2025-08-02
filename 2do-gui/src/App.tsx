@@ -20,5 +20,6 @@ export default function App() {
       <footer>
         <p>Click on a todo to edit</p>
       </footer>
+    </>
   );
 }
