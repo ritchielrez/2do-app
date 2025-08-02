@@ -42,6 +42,10 @@ body {
   place-items: center;
 }
 
+#root {
+  max-width: 600px;
+}
+
 header {
   margin: 0.5em 0 0.5em 0;
   justify-self: center;
