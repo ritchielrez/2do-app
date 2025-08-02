@@ -110,6 +110,7 @@ input[type="text"]:focus {
   flex: 1;
   min-width: 0;
   padding: 0.2em;
+  overflow-wrap: break-word;
 }
 
 .non-editing-todo {
