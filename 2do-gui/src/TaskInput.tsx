@@ -3,9 +3,7 @@ import { Buttons } from "./Buttons";
 import { todosAdd } from "./TodoList";
 
 const TaskInput = memo(function TaskInput() {
-  const [newTask, setNewTask] = useState<string | null>(null);
-  if (newTask == null)
-    return <Buttons newTask={newTask} setNewTask={setNewTask}></Buttons>;
+  const [newTask, setNewTask] = useState<string>("");
   return (
     <>
       <input
@@ -13,19 +11,19 @@ const TaskInput = memo(function TaskInput() {
         id="task-input"
         type="text"
         value={newTask}
+        placeholder="New task"
         onKeyDown={(event) => {
           if (event.key == "Escape") {
-            setNewTask(null);
+            setNewTask("");
           } else if (event.key == "Enter") {
             todosAdd(newTask);
-            setNewTask(null);
+            setNewTask("");
           }
         }}
         onChange={(e) => {
           setNewTask(e.target.value);
         }}
       ></input>
-      <Buttons newTask={newTask} setNewTask={setNewTask}></Buttons>
     </>
   );
 });

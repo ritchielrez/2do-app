@@ -18,10 +18,6 @@ export type Todo = {
   id: number;
 };
 
-type TodoListProps = {
-  searchStr: string;
-};
-
 type TodoAction = {
   task: string | null;
   type: TodoActionType;
@@ -157,13 +153,12 @@ export function todosReset(todos: Array<Todo>) {
   });
 }
 
-const TodoList = memo(function TodoList({ searchStr }: TodoListProps) {
+const TodoList = memo(function TodoList() {
   [todos, todosDispatch] = useReducer(todosReducer, initialTodo);
-  const todos_filtered = todos.filter((todo) => todo.task.includes(searchStr));
 
   return (
     <div id="todo-list">
-      {todos_filtered.map((todo) => (
+      {todos.map((todo) => (
         <div className="todo" key={todo.id}>
           <input
             type="checkbox"
