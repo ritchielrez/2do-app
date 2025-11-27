@@ -47,8 +47,11 @@ body {
 }
 
 header {
-  margin: 0.5em 0 0.5em 0;
-  justify-self: center;
+  font-size: 2em;
+  font-weight: bold;
+  display: grid;
+  margin: 0.7em 0 0.7em 0;
+  justify-items: center;
 }
 
 footer {

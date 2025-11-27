@@ -10,9 +10,7 @@ export default function App() {
   // TODO: Wrap text if it goes out of container
   return (
     <>
-      <header>
-        <h1>2do app</h1>
-      </header>
+      <header>2do app</header>
       <MenuBar></MenuBar>
       <Search searchStr={searchStr} setSearchStr={setSearchStr}></Search>
       <TodoList searchStr={searchStr}></TodoList>
