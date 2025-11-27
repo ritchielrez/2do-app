@@ -8,6 +8,7 @@ function parseTodos(data: string): Array<Todo> {
     .replace(/[\r\n]+$/, "")
     .split("\n")
     .forEach((line, index) => {
+      if (line == "") return;
       let checked = false;
       if (line.startsWith("- [X]")) checked = true;
       else if (!line.startsWith("- [ ]")) {
