@@ -1,7 +1,4 @@
-@font-face {
-  font-family: Excalifont;
-  src: url(https://excalidraw.nyc3.cdn.digitaloceanspaces.com/fonts/Excalifont-Regular.woff2);
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&display=swap");
 
 * {
   --bg0: #1d2021;
@@ -35,7 +32,7 @@ html {
 }
 
 body {
-  font-family: Excalifont;
+  font-family: "Inter";
   font-size: 24px;
   display: flex;
   flex-direction: column;
