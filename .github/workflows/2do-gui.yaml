@@ -1,8 +1,9 @@
 name: Deploy static content
-
 on:
   push:
     branches: ['main']
+    paths:
+      - "2do-gui/**"
     # Allows you to run this workflow manually from the Actions tab
     workflow_dispatch:
 
@@ -27,9 +28,13 @@ jobs:
           node-version: lts/*
           cache: 'npm'
       - name: Install dependencies
-        run: cd 2do-gui/ && npm ci
+        run: |
+          cd 2do-gui
+          npm ci
       - name: Build
-        run: npm run build
+        run: |
+          cd 2do-gui
+          npm run build
 
   deploy:
     needs: build
@@ -43,7 +48,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './2do-gui/dist'
+          path: './2do-gui/dist/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
