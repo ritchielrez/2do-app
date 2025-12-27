@@ -27,7 +27,7 @@ jobs:
           node-version: lts/*
           cache: 'npm'
       - name: Install dependencies
-        run: npm ci
+        run: cd 2do-gui/ && npm ci
       - name: Build
         run: npm run build
 
@@ -43,7 +43,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './dist'
+          path: './2do-gui/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
