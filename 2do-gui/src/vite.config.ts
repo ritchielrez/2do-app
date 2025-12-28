@@ -2,6 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  base: "/2do-app/2do-gui/",
+  base: "/2do-app/",
   plugins: [react()],
 });
