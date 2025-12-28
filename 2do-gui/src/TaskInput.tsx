@@ -1,5 +1,4 @@
 import { memo, useState } from "react";
-import { Buttons } from "./Buttons";
 import { todosAdd } from "./TodoList";
 
 const TaskInput = memo(function TaskInput() {

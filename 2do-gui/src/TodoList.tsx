@@ -1,6 +1,7 @@
 import { memo, useReducer } from "react";
 import { loadTodos, saveTodos } from "./Storage.ts";
 import EditableTodo from "./EditableTodo.tsx";
+import deleteSvg from "../assets/delete.svg";
 
 enum TodoActionType {
   add = 0,
@@ -176,7 +177,7 @@ const TodoList = memo(function TodoList() {
             </span>
           )}
           <button aria-label="delete-task" onClick={() => todosDelete(todo.id)}>
-            <img alt="Delete" src="assets/delete.svg"></img>
+            <img alt="Delete" src={deleteSvg}></img>
           </button>
         </div>
       ))}
