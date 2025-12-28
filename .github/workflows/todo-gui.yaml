@@ -38,13 +38,14 @@ jobs:
         run: |
           cd 2do-gui
           npm run build
+          cp -r dist ../dist
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: '2do-gui/dist'
+          path: 'dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
