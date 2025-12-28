@@ -1,7 +1,7 @@
 # 2do-app
 
 2do-app is a simple todo app with a CLI and GUI frontend. It supports adding, deleting and editings todos in your todolist. You can export todolist to save it in your computer as well.
-If you want to test out the GUI version of this program, visit (https://ritchielrez.github.io/2do-app).
+If you want to test out the GUI version of this program, visit https://ritchielrez.github.io/2do-app.
 
 ## Screenshot
 ![2do-gui](./Screenshot_GUI.jpeg)
