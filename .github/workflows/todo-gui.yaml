@@ -19,7 +19,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://ritchielrez.github.io/2do-app/
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
